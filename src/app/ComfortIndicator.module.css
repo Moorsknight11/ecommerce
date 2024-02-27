@@ -1,0 +1,50 @@
+.wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  .container {
+  
+    position: relative;
+    width: 50%;
+  }
+  @media screen and (max-width: 800px) {
+    /* Your CSS styles for screens with a maximum width of 800 pixels */
+    .container {
+  
+      position: relative;
+      width: 100vh;
+    }
+
+  }
+  
+  .bar {
+
+    height: 4px;
+    background-color: #ccc;
+    position: relative;
+  }
+  
+  .indicator {
+    border-radius:16px;
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 5%;
+    height: 20px;
+    background-color: blue;
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .checkpoints {
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .checkpoint {
+    border-radius:16px;
+    text-align: center;
+  }
