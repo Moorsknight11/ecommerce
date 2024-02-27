@@ -108,7 +108,6 @@ const ProductDetails = ({ product, products }) => {
             }
 
         }
-
         eventSource.onerror = (error) => {
             console.error('SSE connection error:', error);
             // Handle the SSE connection error here
