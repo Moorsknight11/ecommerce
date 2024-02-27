@@ -107,9 +107,6 @@ const ProductDetails = ({ product, products }) => {
                 }
             }
 
-
-
-
         };
 
         eventSource.onerror = (error) => {
