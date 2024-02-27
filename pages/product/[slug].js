@@ -121,6 +121,7 @@ const ProductDetails = ({ product, products }) => {
             console.log('SSE connection closed.');
             // Optional: Perform actions when the SSE connection is closed
         }
+        
         // Clean up the EventSource when the component unmounts
         return () => {
             eventSource.close();
