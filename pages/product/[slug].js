@@ -17,7 +17,6 @@ const ProductDetails = ({ product, products }) => {
     //     return <div>Product not found</div>;
     // }
     const [imageOfColor, setImageOfColor] = useState({});
-
     const [imageOfIndex, setImageOfIndex] = useState(false);
     const [index, setIndex] = useState(0);
     const [indexColors, setIndexColors] = useState(0);
