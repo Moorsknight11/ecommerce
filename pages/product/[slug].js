@@ -118,7 +118,6 @@ const ProductDetails = ({ product, products }) => {
             console.log('SSE connection established.', eventSource);
             // Optional: Perform actions when the SSE connection is established
         };
-
         eventSource.onclose = () => {
             console.log('SSE connection closed.');
             // Optional: Perform actions when the SSE connection is closed
