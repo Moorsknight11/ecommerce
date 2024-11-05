@@ -1,5 +1,6 @@
 // pages/api/products.js
 import { IncomingForm } from 'formidable';
+import { v2 as cloudinary } from 'cloudinary';
 import db from '../../lib/db';
 import fs from 'fs';
 import path from 'path';
@@ -10,6 +11,11 @@ export const config = {
     },
 };
 const uploadDir = path.resolve('./public/uploads'); // Use path.resolve for absolute path
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 const productsHandler = async (req, res) => {
     let connection;
     connection = await db.getConnection();
@@ -26,55 +32,74 @@ const productsHandler = async (req, res) => {
             // console.log('Files received:', files);
             // Extract fields and files
             const { name, description, category_id, parent_category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active } = fields;
-            const imageUrls = [];
+            let imageUrls
 
             // Process images
             try {
                 console.log(files)
-                if (files.images) {
-                    const images = Array.isArray(files.images) ? files.images : [files.images];
-                    for (const image of images) {
-                        const tempPath = image.filepath;
-                        const newFilename = `${image.newFilename}.${image.mimetype.split('/')[1]}`;
-                        const targetPath = path.join(form.uploadDir, newFilename);
-                        imageUrls.push(`/uploads/${newFilename}`);
+                // if (files.images) {
+                //     const images = Array.isArray(files.images) ? files.images : [files.images];
+                //     for (const image of images) {
+                //         const tempPath = image.filepath;
+                //         const newFilename = `${image.newFilename}.${image.mimetype.split('/')[1]}`;
+                //         const targetPath = path.join(form.uploadDir, newFilename);
+                //         imageUrls.push(`/uploads/${newFilename}`);
 
-                        // Move file to the desired location
-                        fs.renameSync(tempPath, targetPath); // Synchronous to handle errors directly
-                        try {
-                            console.log('Moving file from', tempPath, 'to', targetPath);
-                            fs.renameSync(tempPath, targetPath); // This will throw an error if the tempPath is invalid
+                //         // Move file to the desired location
+                //         fs.renameSync(tempPath, targetPath); // Synchronous to handle errors directly
+                //         try {
+                //             console.log('Moving file from', tempPath, 'to', targetPath);
+                //             fs.renameSync(tempPath, targetPath); // This will throw an error if the tempPath is invalid
 
-                            console.log(imageUrls)
+                //             console.log(imageUrls)
 
-                        } catch (error) {
-                            console.error('Error moving file:', error);
-                        }
-                        // Store the URL of the uploaded image
+                //         } catch (error) {
+                //             console.error('Error moving file:', error);
+                //         }
+                //         // Store the URL of the uploaded image
 
+                //     }
+
+
+                // }
+                const file = files.images
+                async function uploadFiles(files) {
+                    const uploadPromises = files.map(file =>
+                        cloudinary.uploader.upload(file.filepath, {
+                            use_filename: true,
+                        })
+                    );
+
+
+                    // Wait for all images to upload
+                    const results = await Promise.all(uploadPromises);
+                    const urls = results.map(result => result.secure_url);
+                    imageUrls = urls
+                    console.log(urls)
+                        ; // Each result will contain Cloudinary response data for each upload
+
+
+                    ; // Adjust this based on your input name
+
+                    const imageUrlsString = imageUrls.join(','); // Join URLs if storing multiple
+
+                    const result = await db.query(
+                        'INSERT INTO product (name,description,category_id,parent_category_id,brand_id,sku,price,discount,quantity_in_stock,weight,dimensions,color,size,material,is_featured,is_active,images_urls) VALUES (?,?,?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?, ?, ? )',
+                        [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active, imageUrlsString]
+                    );
+
+                    console.log(result)
+                    const imageUrlsdb = imageUrlsString.split(',').map(url => url.trim());
+                    const insertedId = result[0].insertId
+                    console.log(insertedId)
+                    for (const imageUrl of imageUrlsdb) {
+                        await db.execute('INSERT INTO images (product_id, image_url) VALUES (?, ?)', [insertedId, imageUrl]);
+                        console.log("test")
                     }
-
-
+                    return res.status(200).json({ message: 'Product added successfully!', productId: result.insertId });
+                    // Save product data in the database
                 }
-
-                const imageUrlsString = imageUrls.join(','); // Join URLs if storing multiple
-
-                const result = await db.query(
-                    'INSERT INTO product (name,description,category_id,parent_category_id,brand_id,sku,price,discount,quantity_in_stock,weight,dimensions,color,size,material,is_featured,is_active,images_urls) VALUES (?,?,?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?, ?, ? )',
-                    [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active, imageUrlsString]
-                );
-
-                console.log(result)
-                const imageUrlsdb = imageUrlsString.split(',').map(url => url.trim());
-                const insertedId = result[0].insertId
-                console.log(insertedId)
-                for (const imageUrl of imageUrlsdb) {
-                    await db.execute('INSERT INTO images (product_id, image_url) VALUES (?, ?)', [insertedId, imageUrl]);
-                    console.log("test")
-                }
-                return res.status(200).json({ message: 'Product added successfully!', productId: result.insertId });
-                // Save product data in the database
-
+                uploadFiles(file)
             } catch (error) {
                 console.error('Database insert error:', error);
                 return res.status(500).json({ message: 'Error adding product to database.' });

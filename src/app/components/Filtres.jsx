@@ -170,7 +170,8 @@ const Filtres = (test) => {
           {attributes.map((attribute, index) => (
             <li
               key={index}
-              className="flex items-center justify-between text-lg text-gray-700 hover:text-blue-500 cursor-pointer transition-all duration-300"
+              style={{display:"flex", alignItems:"center", justifyContent:"space-between" }}
+              className="text-lg text-gray-700 hover:text-blue-500 cursor-pointer transition-all duration-300"
             >
               <span>{attribute}</span>
               {/* Chevron icon */}
@@ -179,6 +180,7 @@ const Filtres = (test) => {
                 className="h-5 w-5 text-gray-500"
                 viewBox="0 0 20 20"
                 fill="currentColor"
+                width="16"
               >
                 <path
                   fillRule="evenodd"

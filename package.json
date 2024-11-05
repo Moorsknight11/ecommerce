@@ -19,6 +19,8 @@
  
    
   "lint": "next lint",
+ 
+   
   "export": "next export"
  
   },
@@ -50,6 +52,9 @@
   "canvas-confetti": "^1.5.1",
  
    
+  "cloudinary": "^2.5.1",
+ 
+   
   "events": "^3.3.0",
  
    
@@ -63,6 +68,9 @@
  
    
   "next": "^14.1.0",
+ 
+   
+  "next-cloudinary": "^6.16.0",
  
    
   "next-sanity": "^7.1.4",
