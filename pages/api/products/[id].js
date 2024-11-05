@@ -92,7 +92,7 @@ export default async function handler(req, res) {
 
                 const file = files.images
                 async function uploadFiles(files) {
-                    const uploadPromises = files.map(file =>
+                    const uploadPromises = files?.map(file =>
                         cloudinary.uploader.upload(file.filepath, {
                             use_filename: true,
                         })
@@ -101,7 +101,7 @@ export default async function handler(req, res) {
 
                     // Wait for all images to upload
                     const results = await Promise.all(uploadPromises);
-                    const urls = results.map(result => result.secure_url);
+                    const urls = results?.map(result => result.secure_url);
                     imageUrls = urls
                     console.log(urls)
                     const oldUrls = await db.execute(
@@ -112,7 +112,7 @@ export default async function handler(req, res) {
                     console.log('oldurls', oldUrls)
 
 
-                    const imageUrlsdb = imageUrls.map(url => url.trim());
+                    const imageUrlsdb = imageUrls?.map(url => url.trim());
 
                     for (const imageUrl of imageUrlsdb) {
                         await db.execute('INSERT INTO images (product_id, image_url) VALUES (?, ?)', [id, imageUrl]);
@@ -185,9 +185,9 @@ export default async function handler(req, res) {
 
 
 
-                if (files && files.images && files.images.length > 0) {
-                    uploadFiles(file)
-                }
+
+                uploadFiles(file)
+
             } catch (error) {
                 console.error('Database insert error:', error);
                 return res.status(500).json({ message: 'Error adding product to database.' });
