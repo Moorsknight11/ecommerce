@@ -24,22 +24,7 @@ const Home = () => {
     'Kurutma Makinesi',
     'DAHA FAZLA GÖSTER'
   ];
-  const addBrands = async () => {
-    try {
-      const response = await fetch('/api/addBrands', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error adding brands:', error);
-    }
-  };
-  addBrands()
+ 
   useEffect(() => {
 
 
