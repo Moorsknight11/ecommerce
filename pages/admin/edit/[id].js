@@ -1,4 +1,5 @@
-// pages/admin/edit/[id].js
+"use client";
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

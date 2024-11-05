@@ -2,16 +2,16 @@ import React from 'react'
 import Link from 'next/link'
 import { urlFor } from '../../../lib/client'
 
-function Product({ product: {name } }) {
+function Product({ product: {name,images_urls} }) {
 
   
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>
       <Link style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }} href={`/product/${name}`}>
-      {name}
+ 
         <div className="product-card">
           <img
-            src={""}
+            src={images_urls.split(',')[0]}
             width={250}
             height={250}
             className="product-image"

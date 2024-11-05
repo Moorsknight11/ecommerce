@@ -6,16 +6,18 @@ import SubCategory from '../../src/app/components/Subcategory';
 import { useRouter } from 'next/router';
 import db from '../../lib/db';
 import Subcategory from '@/app/components/Subcategory';
+import Filtres from '@/app/components/Filtres';
 
 const CategoryProducts = ({ subcategories }) => {
     const [subproducts, setSubProducts] = useState([]);
     const [datasetUpdated, setDatasetUpdated] = useState(false);
     const [sseConnection, setSSEConnection] = useState(null);
+
     useEffect(() => {
 
         setSubProducts(subcategories)
     }, [])
-console.log(subproducts)
+    console.log(subproducts)
     // Inside your functional component
     // const router = useRouter();
     // const { slug } = router.query;
@@ -29,7 +31,7 @@ console.log(subproducts)
     //     setSSEConnection(eventSource)
 
     //     eventSource.onmessage = (event) => {
-    
+
     //         console.log(event.data)
     //         // Handle the received message here
     //         // Assuming event.data is your object and products and setProducts are your state variable and setter function respectively
@@ -178,10 +180,13 @@ console.log(subproducts)
     // console.log(categoryProducts)
     return (
         <Layout>
-            <div className="products-container">
-                {subproducts?.map((item) => (
-                    <SubCategory key={item.category_id} subcategory={item} />
-                ))}
+            <div style={{display:"flex",justifyContent:"start",alignItems:"start"}}>
+                <Filtres />
+                <div className="products-container">
+                    {subproducts?.map((item) => (
+                        <SubCategory key={item.category_id} subcategory={item} />
+                    ))}
+                </div>
             </div>
         </Layout>
     )
@@ -198,7 +203,7 @@ export const getServerSideProps = async (context) => {
     const { slug } = context.params;
     try {
         // Query to fetch products based on the slug
-        const [subcategories] = await db.execute(  'SELECT * FROM categories WHERE parent_category_id = (SELECT category_id FROM categories WHERE name = ?)',[slug]);
+        const [subcategories] = await db.execute('SELECT * FROM categories WHERE parent_category_id = (SELECT category_id FROM categories WHERE name = ?)', [slug]);
 
         // Check if products are found
         if (subcategories.length === 0) {
@@ -218,7 +223,7 @@ export const getServerSideProps = async (context) => {
         };
     }
 };
-  
+
 
 
 
@@ -246,7 +251,7 @@ export const getServerSideProps = async (context) => {
 // export const getStaticPaths = async () => {
 
 //     const categories = await client.fetch(`*[_type == "category"]{
-        
+
 //         slug{
 //             current
 //         }

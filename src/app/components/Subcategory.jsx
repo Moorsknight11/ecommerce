@@ -1,19 +1,18 @@
 import React from 'react'
 import Link from 'next/link'
-import { urlFor } from '../../../lib/client'
+import Filtres from './Filtres'
 
-
-function Subcategory({ subcategory: {name} }) {
+function Subcategory({ subcategory: {name,image_url} }) {
 
   
   return (
 
     <div>
-  
+    
       <Link style={{display:'flex',justifyContent:'center',alignItems:'center'}} href={`/subcategory/${name}/`}>
         <div className="product-card">
           <img
-            src={""}
+            src={image_url}
             width={250}
             height={250}
             className="product-image"

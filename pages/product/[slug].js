@@ -25,7 +25,7 @@ const ProductDetails = ({ product, products }) => {
     const [selectedSizePrice, setSelectedSizePrice] = useState(0); // Medium by deselectmycolorfault
     const [enlargedImage, setEnlargedImage] = useState(null);
     const { selectedColor, setSelectedColor, onAdd, decQty, incQty, qty, setShowCart, selectedSize, setSelectedSize, setSelectedSizes, setTotalPrice, selectedSizes } = useStateContext();
-
+    const [downloadedImages, setDownloadedImages] = useState([])
     const [savedProduct, setSavedProduct] = useState({})
     const [sseConnection, setSSEConnection] = useState(null);
     // const [reloadImgs, setReloadImgs] = useState(false)
@@ -40,11 +40,12 @@ const ProductDetails = ({ product, products }) => {
     const router = useRouter();
     const { slug } = router.query;
     const { images_urls, name, details, price, prices, _type, colors, _id } = savedProduct ? product : "";
+   
     useEffect(() => {
 
         setTestName(name)
         setTestDetails(details)
-
+        setDownloadedImages(images_urls.split(','))
 
 
     }, [name, details])
@@ -75,7 +76,7 @@ const ProductDetails = ({ product, products }) => {
             // Check if the slug is equal to the _type
             if (update) {
                 if (slug === update.slug.current) {
-                  
+
                     if (savedProduct._updatedAt === update._updatedAt) {
                         router.push('/category/');
                     }
@@ -95,7 +96,7 @@ const ProductDetails = ({ product, products }) => {
                         setTestImage([])
                         setTestImage(prevTestImage => {
                             // Clear the previous state and replace it with the new image array
-                            return [...update.image];
+                            return [...update.images_urls.split(',')];
                         });
                         console.log("Deleted existing product with same updatedAt:");
 
@@ -121,7 +122,7 @@ const ProductDetails = ({ product, products }) => {
             console.log('SSE connection closed.');
             // Optional: Perform actions when the SSE connection is closed
         }
-        
+
         // Clean up the EventSource when the component unmounts
         return () => {
             eventSource.close();
@@ -253,20 +254,20 @@ const ProductDetails = ({ product, products }) => {
 
     const handleSlide = (direction) => {
         if (direction === 'next') {
-            if (index < image.length - 1) {
+            if (index < downloadedImages.length - 1) {
                 setIndex(index + 1);
-                setEnlargedImage(urlFor(image[index + 1]));
+                setEnlargedImage(downloadedImages[index + 1]);
             }
         } else if (direction === 'prev') {
             if (index > 0) {
                 setIndex(index - 1);
-                setEnlargedImage(urlFor(image[index - 1]));
+                setEnlargedImage(downloadedImages[index - 1]);
             }
         }
     };
     const handleSlideMain = (direction) => {
         if (direction === 'next') {
-            if (index < image.length - 1) {
+            if (index < downloadedImages.length - 1) {
                 setIndex(index + 1);
 
             }
@@ -283,7 +284,7 @@ const ProductDetails = ({ product, products }) => {
             console.log('swipoe left')
 
             document.querySelector('.swipe-right').click()
-            if (index < image.length - 1) {
+            if (index < downloadedImages.length - 1) {
 
                 document.querySelector('.enlarged-image-container img').classList.add('slide-in-left');
                 // Remove animation class after animation ends
@@ -320,7 +321,7 @@ const ProductDetails = ({ product, products }) => {
             // Handle swipe left (go to next item)
             // You can implement logic to navigate to the next item here
             document.querySelector('.swipe-right-main').click()
-            if (index < image.length - 1) {
+            if (index < downloadedImages.length - 1) {
 
                 document.querySelector('.swipe-item').classList.add('slide-in-left');
                 // Remove animation class after animation ends
@@ -425,8 +426,8 @@ const ProductDetails = ({ product, products }) => {
                         )}
                         <div className="image-container swipe-container">
 
-                            {!imageOfIndex && <div style={{ position: 'relative' }}><img onClick={() => handleImageClick(urlFor(image && image[index]))}
-                                src={images_urls.split(',')[0]}
+                            {!imageOfIndex && <div style={{ position: 'relative' }}><img onClick={() => handleImageClick(downloadedImages && downloadedImages[index])}
+                                src={downloadedImages[0]}
                                 alt="product"
                                 className="product-detail-image swipe-item"
 
@@ -436,15 +437,15 @@ const ProductDetails = ({ product, products }) => {
                             </div>
                             }
 
-                            {imageOfIndex && <img src={""} alt="product" className="product-detail-image" />}
+                            {imageOfIndex && <img src={downloadedImages[0]} alt="product" className="product-detail-image" />}
                         </div>
                         <div className="small-images-container">
                             {
-                                colors?.map((item, i) => (
+                                images_urls.split(",")?.map((item, i) => (
                                     <img
                                         alt={item.name}
                                         key={i}
-                                        src={""}
+                                        src={item}
                                         className={i === indexColors ? 'small-image selected-image' : 'small-image'}
                                         onMouseEnter={() => {
                                             setIndexColors(i)
@@ -657,21 +658,21 @@ export const getServerSideProps = async (context) => {
 
     try {
         // Fetch the specific product using its slug
-        const [result] = await db.execute('SELECT * FROM product WHERE name = ?',[slug]);
+        const [result] = await db.execute('SELECT * FROM product WHERE name = ?', [slug]);
 
 
         // Fetch related products (e.g., same category or type)
 
-        const product= result[0]; // Assuming you get a single product or an array with one object
+        const product = result[0]; // Assuming you get a single product or an array with one object
 
         if (product) {
-          // Serialize the date fields
-          product.created_at = product.created_at.toISOString();
-          product.updated_at = product.updated_at.toISOString();
+            // Serialize the date fields
+            product.created_at = product.created_at.toISOString();
+            product.updated_at = product.updated_at.toISOString();
         }
-      
+
         return {
-          props: { product},
+            props: { product },
         };
     } catch (error) {
         console.error(error);

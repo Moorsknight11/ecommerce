@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { urlFor } from '../../../lib/client'
 
 
-function Category({ category: { image, name } }) {
-  console.log(image)
+function Category({ category: { image_url, name } }) {
+  console.log(image_url)
   
   return (
 
@@ -13,7 +13,7 @@ function Category({ category: { image, name } }) {
       <Link style={{display:'flex',justifyContent:'center',alignItems:'center'}} href={`/category/${name}`}>
         <div className="product-card">
           <img
-            src={""}
+            src={image_url}
             width={250}
             height={250}
             className="product-image"
