@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { client } from '../../lib/client'
 import Layout from '../../src/app/components/Layout'; // Import the Layout component
-import SubCategory from '../../src/app/components/SubCategory';
+import SubCategory from '../../src/app/components/Subcategory';
 import { useRouter } from 'next/router';
 import db from '../../lib/db';
 import Subcategory from '@/app/components/Subcategory';
