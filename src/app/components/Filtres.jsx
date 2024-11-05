@@ -115,7 +115,7 @@ const Filtres = (test) => {
         <h1>Select Brands</h1>
         <form style={{ maxWidth: "150px" }} onSubmit={handleSubmit}>
           <fieldset>
-            <legend>Choose the brands you're interested in:</legend>
+            <legend>Choose the brands youre interested in:</legend>
 
             <div className="brand-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: "20vh", overflowY: "scroll" }}>
               {brands.map((brand, index) => (
