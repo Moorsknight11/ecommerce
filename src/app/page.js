@@ -5,7 +5,7 @@ import Filtres from './components/Filtres';
 
 
 const Home = () => {
- 
+
   const [categories, setCategories] = useState([]);
   const [slug, setSlug] = useState("")
   const categoriesList = [
@@ -24,7 +24,22 @@ const Home = () => {
     'Kurutma Makinesi',
     'DAHA FAZLA GÖSTER'
   ];
+  const addBrands = async () => {
+    try {
+      const response = await fetch('/api/addBrands', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error adding brands:', error);
+    }
+  };
+  addBrands()
   useEffect(() => {
 
 
@@ -56,7 +71,7 @@ const Home = () => {
     <>
       <div className="products-heading">
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      
+
           <div>
             <div>
               <h2>Best selling product</h2>
