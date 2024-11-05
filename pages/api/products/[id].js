@@ -185,7 +185,9 @@ export default async function handler(req, res) {
 
 
 
-                uploadFiles(file)
+                if (files && files.images && files.images.length > 0) {
+                    uploadFiles(file)
+                }
             } catch (error) {
                 console.error('Database insert error:', error);
                 return res.status(500).json({ message: 'Error adding product to database.' });
