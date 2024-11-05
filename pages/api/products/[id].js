@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     let connection;
     connection = await db.getConnection();
 
-    const uploadDir = path.resolve('./public/uploads');
+    //const uploadDir = path.resolve('./public/uploads');
 
 
     if (req.method === 'PUT') {
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
         const form = new IncomingForm();
         //console.log(form)
-        form.uploadDir = uploadDir
+        //form.uploadDir = uploadDir
         // console.log(form)
         form.parse(req, async (err, fields, files) => {
 

@@ -10,7 +10,7 @@ export const config = {
         bodyParser: false, // Disable body parsing for file uploads
     },
 };
-const uploadDir = path.resolve('./public/uploads'); // Use path.resolve for absolute path
+//const uploadDir = path.resolve('./public/uploads'); // Use path.resolve for absolute path
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -22,7 +22,7 @@ const productsHandler = async (req, res) => {
     if (req.method === 'POST') {
         const form = new IncomingForm();
         //console.log(form)
-        form.uploadDir = uploadDir
+        //form.uploadDir = uploadDir
         // console.log(form)
         form.parse(req, async (err, fields, files) => {
             if (err) {
