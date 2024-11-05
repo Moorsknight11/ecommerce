@@ -8,7 +8,7 @@ function Layout({children}) {
   return (
     <div className="layout">
       <Head>
-        <title>Lydia store</title>
+        <title>Dalanda store</title>
       </Head>
       <header>
         <Navbar/>

@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useCallback, } from 'react'
 import { useStateContext } from '../../context/StateContext';
 // import {Toaster} from 'react-hot-toast';
-import { client, urlFor } from '../../lib/client'
 // import "../../src/app/globals.css";
 import Layout from '../../src/app/components/Layout'; // Import the Layout component
 import { AiOutlineMinus, AiOutlineplus, AiFillStar, AiOutlineStar, AiOutlinePlus } from 'react-icons/ai';
@@ -11,11 +10,13 @@ import Product from '../../src/app/components/Product';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter } from 'next/router';
-
+import db from '../../lib/db';
 const ProductDetails = ({ product, products }) => {
     // if (!product) {
     //     return <div>Product not found</div>;
     // }
+
+    console.log(products)
     const [imageOfColor, setImageOfColor] = useState({});
     const [imageOfIndex, setImageOfIndex] = useState(false);
     const [index, setIndex] = useState(0);
@@ -38,16 +39,15 @@ const ProductDetails = ({ product, products }) => {
 
     const router = useRouter();
     const { slug } = router.query;
-    const { image, name, details, price, prices, _type, colors, _id } = savedProduct ? product : "";
+    const { images_urls, name, details, price, prices, _type, colors, _id } = savedProduct ? product : "";
     useEffect(() => {
 
-        setTestImage([...image])
         setTestName(name)
         setTestDetails(details)
 
 
 
-    }, [image, name, details])
+    }, [name, details])
     useEffect(() => {
         console.log(product)
         setSavedProduct(product)
@@ -218,13 +218,13 @@ const ProductDetails = ({ product, products }) => {
 
 
 
-        if (colors) {
-            const colorImage = colors?.find(item => item.name === selectColor?.options[0]?.value)?.image; // Using optional chaining for safety
-            setImageOfColor(colorImage);
-        }
-        else {
-            setImageOfColor(image[0]);
-        }
+        // if (colors) {
+        //     const colorImage = colors?.find(item => item.name === selectColor?.options[0]?.value)?.image; // Using optional chaining for safety
+        //     setImageOfColor(colorImage);
+        // }
+        // else {
+        //     setImageOfColor(image[0]);
+        // }
 
 
 
@@ -426,7 +426,7 @@ const ProductDetails = ({ product, products }) => {
                         <div className="image-container swipe-container">
 
                             {!imageOfIndex && <div style={{ position: 'relative' }}><img onClick={() => handleImageClick(urlFor(image && image[index]))}
-                                src={urlFor(image && image[index])}
+                                src={images_urls.split(',')[0]}
                                 alt="product"
                                 className="product-detail-image swipe-item"
 
@@ -436,7 +436,7 @@ const ProductDetails = ({ product, products }) => {
                             </div>
                             }
 
-                            {imageOfIndex && <img src={urlFor(colors[indexColors].image && colors[indexColors].image)} alt="product" className="product-detail-image" />}
+                            {imageOfIndex && <img src={""} alt="product" className="product-detail-image" />}
                         </div>
                         <div className="small-images-container">
                             {
@@ -444,7 +444,7 @@ const ProductDetails = ({ product, products }) => {
                                     <img
                                         alt={item.name}
                                         key={i}
-                                        src={urlFor(item.image)}
+                                        src={""}
                                         className={i === indexColors ? 'small-image selected-image' : 'small-image'}
                                         onMouseEnter={() => {
                                             setIndexColors(i)
@@ -466,7 +466,7 @@ const ProductDetails = ({ product, products }) => {
                                         <img
                                             alt="item"
                                             key={i}
-                                            src={urlFor(item)}
+                                            src={""}
                                             className={i === index ? 'small-image selected-image' : 'small-image'}
                                             onMouseEnter={() => {
                                                 setIndex(i)
@@ -650,19 +650,36 @@ const ProductDetails = ({ product, products }) => {
 
 
 
+
+
 export const getServerSideProps = async (context) => {
     const { slug } = context.params;
-    const query = `*[_type in ["product", "mattress", "chair", "bed", "bedroomset", "diningset", "jatifurniture", "multiplepurposes", "officetable", "sofa", "sofabed", "tvcabinet"] && slug.current == '${slug}'][0]`;
 
-    const product = await client.fetch(query)
-    const productsQuery = `*[_type in ["${product._type}"]]`
-    const products = await client.fetch(productsQuery)
+    try {
+        // Fetch the specific product using its slug
+        const [result] = await db.execute('SELECT * FROM product WHERE name = ?',[slug]);
 
-    return {
-        props: { products, product }
 
+        // Fetch related products (e.g., same category or type)
+
+        const product= result[0]; // Assuming you get a single product or an array with one object
+
+        if (product) {
+          // Serialize the date fields
+          product.created_at = product.created_at.toISOString();
+          product.updated_at = product.updated_at.toISOString();
+        }
+      
+        return {
+          props: { product},
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            notFound: true, // If an error occurs, render a 404 page
+        };
     }
-}
+};
 
 
 

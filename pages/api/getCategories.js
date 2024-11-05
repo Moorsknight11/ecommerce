@@ -1,16 +1,15 @@
-
 "use client";
-import { client } from '../../lib/client';
-
+import db from '../../lib/db';
 export default async function handler(req, res) {
   try {
-    const categoryQuery = '*[_type =="category"]';
-    const categories = await client.fetch(categoryQuery);
+    // Fetch categories from the MySQL database
+    const [categories] = await db.execute('SELECT * FROM categories WHERE parent_category_id IS NULL'); // Make sure your table name is correct
 
-    const bannerQuery = '*[_type == "banner"]';
-    const bannerData = await client.fetch(bannerQuery);
+    // Fetch banners from the MySQL database
+   //const [bannerData] = await db.query('SELECT * FROM banners'); // Make sure your table name is correct
 
-    res.status(200).json({ categories, bannerData });
+    // Send the response with fetched data
+    res.status(200).json({ categories});
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ error: 'Error fetching data' });

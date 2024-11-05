@@ -146,6 +146,12 @@ function Navbar() {
 
           }} />}
         </div>
+        <div>
+            <h1>Welcome to the Home Page</h1>
+            <Link href="/admin/adminPassword">
+                <p>Go to Admin Page</p>
+            </Link>
+        </div>
       </div>
       <button className="cart-icon" onClick={() => setShowCart(true)}>
 

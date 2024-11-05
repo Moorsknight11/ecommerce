@@ -1,16 +1,16 @@
 
 "use client";
-import { client } from '../../lib/client';
+import db from '../../lib/db'; // Import your MySQL connection
 
 export default async function handler(req, res) {
   try {
-    const productQuery = '*[_type in ["product", "mattress", "chair", "bed", "bedroomset", "diningset", "jatifurniture", "multiplepurposes", "officetable", "sofa", "sofabed", "tvcabinet"]]';
-    const products = await client.fetch(productQuery);
+    // Fetch products from the MySQL database
+    const [products] = await db.query(`
+      SELECT * FROM product
+    `);
 
-    // const bannerQuery = '*[_type == "banner"]';
-    // const bannerData = await client.fetch(bannerQuery);
-
-    // res.status(200).json({ products, bannerData });
+    // Send the response with fetched products
+    res.status(200).json({ products });
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ error: 'Error fetching data' });
