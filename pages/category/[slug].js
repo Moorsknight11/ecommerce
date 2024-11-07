@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import db from '../../lib/db';
 import Subcategory from '@/app/components/Subcategory';
 import Filtres from '@/app/components/Filtres';
+import Filtresmobile from '@/app/components/Filtresmobile';
+import FilterButtons from '@/app/components/FilterButtons';
 
 const CategoryProducts = ({ subcategories }) => {
     const [subproducts, setSubProducts] = useState([]);
@@ -180,7 +182,9 @@ const CategoryProducts = ({ subcategories }) => {
     // console.log(categoryProducts)
     return (
         <Layout>
-            <div style={{display:"flex",justifyContent:"start",alignItems:"start"}}>
+            <FilterButtons />
+            <Filtresmobile />
+            <div style={{ display: "flex", justifyContent: "start", alignItems: "start" }}>
                 <Filtres />
                 <div className="products-container">
                     {subproducts?.map((item) => (

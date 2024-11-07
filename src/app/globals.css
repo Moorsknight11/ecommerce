@@ -14,11 +14,20 @@ body,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   box-sizing: border-box;
 
+
+}
+.brandsFlex{
+  display:flex;
+  align-items: center;
 }
 .show-on-mobile {
   display: none;
 }
-
+.bulb{
+  margin:2px !important;;
+  border-radius: 10px;
+  border:#5f5f5f solid 1px ;
+}
 .show-on-desktop {
   display: block;
 }

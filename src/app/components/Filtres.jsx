@@ -119,8 +119,9 @@ const Filtres = (test) => {
 
             <div className="brand-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: "20vh", overflowY: "scroll" }}>
               {brands.map((brand, index) => (
-                <label key={index}>
+                <label key={index} className="brandsFlex">
                   <input
+                  className='brandsFlex'
                     type="checkbox"
                     value={brand}
                     onChange={handleCheckboxChange}
