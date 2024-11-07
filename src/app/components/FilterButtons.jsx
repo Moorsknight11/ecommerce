@@ -12,14 +12,14 @@ const FilterButtons = () => {
     ];
     return (
         <div style={{display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>
-            {items.map((item, index) => (<div style={{border:"grey solid 2px",display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>
+            {items.map((item, index) => (<div key={item.index} style={{border:"grey solid 2px",display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>
                 <div style={{display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>{item.chevrons ? (
                <div style={{ display: 'inline-block', transform: 'rotate(90deg)', transformOrigin: 'center' }}>
                <FontAwesomeIcon color="orange" icon={faArrowRightArrowLeft}/>
              </div>
                 ) : (
                     <FaFilter color="orange" />
-                )}<span style={{marginLeft:"10px"}} key={item.index}>{item.name}</span></div>
+                )}<span style={{marginLeft:"10px"}}>{item.name}</span></div>
             </div>))}
         </div>
     )
