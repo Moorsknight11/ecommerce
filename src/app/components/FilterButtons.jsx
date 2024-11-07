@@ -19,7 +19,7 @@ const FilterButtons = () => {
              </div>
                 ) : (
                     <FaFilter color="orange" />
-                )}<span style={{marginLeft:"10px"}}>{item.name}</span></div>
+                )}<span style={{marginLeft:"10px"}} key={item.index}>{item.name}</span></div>
             </div>))}
         </div>
     )
