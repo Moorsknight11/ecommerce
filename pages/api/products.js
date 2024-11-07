@@ -2,8 +2,7 @@
 import { IncomingForm } from 'formidable';
 import { v2 as cloudinary } from 'cloudinary';
 import db from '../../lib/db';
-import fs from 'fs';
-import path from 'path';
+
 
 export const config = {
     api: {

@@ -5,33 +5,42 @@ import { AiOutlineMinus, AiOutlineLeft, AiOutlineShopping, AiOutlinePlus } from 
 import { TiDeleteOutline } from 'react-icons/ti';
 import toast from 'react-hot-toast';
 import { useStateContext } from '../../../context/StateContext';
-import { urlFor } from '../../../lib/client'
-import getStripe from '../../../lib/getStripe';
+import CustomerFormModal from './CustomerFormModal';
+
 function Cart() {
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const cartRef = useRef()
 
   const {
-    selectedSize,onRemove, setSelectedSize, setTotalPrice, toggleCartItemQuantity, totalPrice, totalQuantities, setShowCart, selectedSizes
+    selectedSize, onRemove, setSelectedSize, setTotalPrice, toggleCartItemQuantity, totalPrice, totalQuantities, setShowCart, selectedSizes
   } = useStateContext()
   console.log(selectedSizes)
   async function handleCheckout() {
-    const stripe = await getStripe();
-    const response = await fetch('/api/stripe', {
-      method: 'POST',
-      headers:
-      {
-        'Content-Type': 'application/json',
 
-      },
-      body: JSON.stringify(selectedSizes),
-    });
-    if (response.statusCode === 500) return
-    const data = await response.json();
-    console.log(data)
-    toast.loading('Redirecting...');
-    stripe.redirectToCheckout({ sessionId: data.id })
+
+
+    // const stripe = await getStripe();
+    // const response = await fetch('/api/stripe', {
+    //   method: 'POST',
+    //   headers:
+    //   {
+    //     'Content-Type': 'application/json',
+
+    //   },
+    //   body: JSON.stringify(selectedSizes),
+    // });
+    // if (response.statusCode === 500) return
+    // const data = await response.json();
+    // console.log(data)
+    // toast.loading('Redirecting...');
+    // stripe.redirectToCheckout({ sessionId: data.id })
+
+
+
 
   }
   return (
@@ -55,28 +64,28 @@ function Cart() {
           </Link>
         </div>)}
         <div className='product-container'>
-          {selectedSizes.length >= 1 && selectedSizes.map((item,index) => (
+          {selectedSizes.length >= 1 && selectedSizes.map((item, index) => (
             <div className="product flex-col md:flex-row" key={index}>
-              <img src={urlFor(item?.image)} className='cart-product-image' alt="product" />
+              <img src={""} className='cart-product-image' alt="product" />
               <div className='item-desc'>
                 <div className='flex top'>
                   <h5>
                     {item.name} {item.size} $ {item.price}
                   </h5>
-                
+
 
                 </div>
                 <div className="flex bottom">
                   <div>
                     <p style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="quantity-desc">
-                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="minus" onClick={() => toggleCartItemQuantity(item._id,item.price, 'dec')}>
+                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="minus" onClick={() => toggleCartItemQuantity(item._id, item.price, 'dec')}>
                         <AiOutlineMinus style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} />
                       </span>
                       <span style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="num">
                         {item.quantity}
                       </span>
 
-                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="plus" onClick={() => toggleCartItemQuantity(item._id,item.price, 'inc')}>
+                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="plus" onClick={() => toggleCartItemQuantity(item._id, item.price, 'inc')}>
                         <AiOutlinePlus style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} />
                       </span>
 
@@ -112,10 +121,10 @@ function Cart() {
 
             </div>
             <div className='btn-container'>
-              <button type="button" className='btn' onClick={handleCheckout}>
-                Pay with Stripe
+              <button onClick={openModal}>Proceed to Checkout</button>
 
-              </button>
+              {/* Modal component */}
+              <CustomerFormModal commande={JSON.stringify(selectedSizes)} isOpen={isModalOpen} onClose={closeModal} />
 
             </div>
 

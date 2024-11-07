@@ -394,7 +394,7 @@ const ProductDetails = ({ product, products }) => {
     let selectedPrice;
 
     const handleBuyNow = () => {
-        onAdd(product, qty)
+        onAdd(product, qty,selectedSizePrice)
         setShowCart(true)
     }
     // console.log(qty); // Now it should log the value
@@ -606,15 +606,8 @@ const ProductDetails = ({ product, products }) => {
                             <button className="add-to-cart" onClick={() => {
                                 {
 
-                                    let finalImage;
-                                    if (colors) {
-                                        finalImage = imageOfColor
-                                    }
-                                    else {
-                                        finalImage = image[0]
-                                    }
-                                    console.log(finalImage)
-                                    onAdd(product, qty, selectedSize, selectedSizePrice, finalImage, name, details, prices, _type, selectedColor)
+                                  
+                                    onAdd(product, qty)
 
 
                                 }

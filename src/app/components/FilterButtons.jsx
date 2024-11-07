@@ -11,7 +11,7 @@ const FilterButtons = () => {
 
     ];
     return (
-        <div style={{display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>
+        <div className='show-on-mobile'>
             {items.map((item, index) => (<div key={item.index} style={{border:"grey solid 2px",display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>
                 <div style={{display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}}>{item.chevrons ? (
                <div style={{ display: 'inline-block', transform: 'rotate(90deg)', transformOrigin: 'center' }}>
