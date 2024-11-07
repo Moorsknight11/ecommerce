@@ -101,7 +101,7 @@ const Filtres = (test) => {
 
 
   return (
-    <div className="w-full max-w-xs mx-auto" style={{ fontSize: "10px", maxHeight:'100vh',overflowY:"scroll"}}>
+    <div className="show-on-desktop w-full max-w-xs mx-auto" style={{ fontSize: "10px", maxHeight:'100vh',overflowY:"scroll"}}>
 
       <h2 className="text-xl font-semibold mb-4">İlgili Kategoriler</h2>
       <ul className="space-y-2">

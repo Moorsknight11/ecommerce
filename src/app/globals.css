@@ -15,7 +15,23 @@ body,
   box-sizing: border-box;
 
 }
+.show-on-mobile {
+  display: none;
+}
 
+.show-on-desktop {
+  display: block;
+}
+
+@media (max-width: 768px) { /* Adjust as needed for "mobile" */
+  .show-on-mobile {
+    display: block;
+  }
+
+  .show-on-desktop {
+    display: none;
+  }
+}
 ::-webkit-scrollbar {
   width: 0px;
 }
