@@ -147,9 +147,9 @@ function Navbar() {
           }} />}
         </div>
         <div>
-            <h1>Welcome to the Home Page</h1>
+            <h1 style={{textAlign:"center"}}>Welcome to the Home page</h1>
             <Link href="/admin/adminPassword">
-                <p>Go to Admin Page</p>
+                <p style={{textAlign:"center"}}>Go to Admin Page</p>
             </Link>
         </div>
       </div>
