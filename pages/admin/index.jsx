@@ -53,7 +53,7 @@ const AddProductForm = () => {
     "Sena", "Cetinshop", "LG Chem", "Cuisinart", "Kamardey", "Dysis", "Emex", "ERATEC", "End", "KILINÇ", "onix", "Pulsemed",
     "RUNWAY", "TDS", "UĞUR AVM", "Labella", "Melance", "Besa", "Volkan", "Prestige", "NINJA", "MINIX", "Rubenis", "HOMEND",
     "Orient", "Delta"
-];
+  ];
   // Handle change for input fields
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -137,9 +137,12 @@ const AddProductForm = () => {
   };
   return (
     <div>
-      <h2>get all products to edit and view</h2>
-      <Link style={{display:'flex',justifyContent:'center',alignItems:'center'}} href={`admin/GetProducts`}>
-      click here
+
+      <Link style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} href={`admin/GetProducts`}>
+        get all products to edit and view
+      </Link>
+      <Link style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} href={`admin/AddTransaction`}>
+        Add transaction
       </Link>
       <h2>Add New Product</h2>
       <form encType="multipart/form-data" onSubmit={handleSubmit}>
@@ -235,12 +238,12 @@ const AddProductForm = () => {
           required
         >
           <option value="">Select Brand</option>
-          {brands.map((category,i) => (
-              <option key={i+4} value={i+4}>
-                {category}
-              </option>
-            ))}
-         
+          {brands.map((category, i) => (
+            <option key={i + 4} value={i + 4}>
+              {category}
+            </option>
+          ))}
+
         </select><br /><br />
 
         {/* SKU */}

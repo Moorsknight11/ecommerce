@@ -107,7 +107,7 @@ export const StateContext = ({ children }) => {
                 const newSizeObj = { _id: product.product_id, quantity: qty, price: parseFloat(product.price) };
 
                 // Push the new size object to the previous sizes array
-                return [...prevSizes, newSizeObj];
+                return [...prevSizes, newSizeObj,];
             });
 
 

@@ -1,27 +1,28 @@
 // components/CustomerFormModal.jsx
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function CustomerFormModal({commande, isOpen, onClose }) {
+export default function CustomerFormModal({ commande, isOpen, onClose }) {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     phone: '',
     email: '',
-    commande:commande
+    commande: commande
   });
-useEffect(() => {
-  console.log('Commande updated:', commande);
-  // Update the formData when commande changes
-  setFormData(prevFormData => ({
-    ...prevFormData, // Spread the previous formData
-    commande: commande, // Update the 'commande' field
-  }));
-}, [commande]); // This will run every time 'commande' changes
+  useEffect(() => {
+    console.log('Commande updated:', commande);
+    // Update the formData when commande changes
+    setFormData(prevFormData => ({
+      ...prevFormData, // Spread the previous formData
+      commande: commande,
+      // Update the 'commande' field
+    }));
+  }, [commande]); // This will run every time 'commande' changes
 
-useEffect(() => {
-  // Log updated formData after it changes
-  console.log('FormData updated:', formData);
-}, [formData]); // This effect runs whenever formData is updated
+  useEffect(() => {
+    // Log updated formData after it changes
+    console.log('FormData updated:', formData);
+  }, [formData]); // This effect runs whenever formData is updated
   const styles = {
     overlay: {
       position: 'fixed',
@@ -54,7 +55,7 @@ useEffect(() => {
       cursor: 'pointer',
     },
   };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -62,14 +63,14 @@ useEffect(() => {
       [name]: value,
     });
   };
-  const sendEmailCommand = () =>{
-   
+  const sendEmailCommand = () => {
+
     const response = fetch('/api/command', {
       method: 'POST',
       body: JSON.stringify(formData),
 
     });
-  
+
   }
   const handleSubmit = (e) => {
     e.preventDefault();
