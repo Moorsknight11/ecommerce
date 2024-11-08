@@ -61,8 +61,6 @@ export const StateContext = ({ children }) => {
     // };
 
 
-
-
     const onAdd = (product, qty) => {
         // If product type is 'mattress', find the price based on selected size
 
@@ -88,7 +86,7 @@ export const StateContext = ({ children }) => {
             console.log('yesssssssssssssssssss')
             const updatedCartItems = selectedSizes.map(cartProduct => {
                 if (cartProduct._id === product._id) {
-                    setTotalPrice(prevTotalPrice => prevTotalPrice +  parseFloat(product.price) * qty);
+                    setTotalPrice(prevTotalPrice => prevTotalPrice + parseFloat(product.price) * qty);
                     setTotalQuantities(prevTotalQuantities => prevTotalQuantities + qty);
                     return {
                         ...cartProduct,
@@ -101,12 +99,12 @@ export const StateContext = ({ children }) => {
 
         }
         else {
-            setTotalPrice(prevTotalPrice => prevTotalPrice + parseFloat(product.price)* qty);
+            setTotalPrice(prevTotalPrice => prevTotalPrice + parseFloat(product.price) * qty);
             setTotalQuantities(prevTotalQuantities => prevTotalQuantities + qty);
 
             setSelectedSizes(prevSizes => {
                 // Create a new size object
-                const newSizeObj = { _id: product.product_id, quantity: qty, price: parseFloat(product.price )};
+                const newSizeObj = { _id: product.product_id, quantity: qty, price: parseFloat(product.price) };
 
                 // Push the new size object to the previous sizes array
                 return [...prevSizes, newSizeObj];
@@ -370,11 +368,6 @@ export const StateContext = ({ children }) => {
             foundProduct = selectedSizes.find((item) => item._id === id)
             index = selectedSizes.findIndex((product) => product._id === id)
             console.log(foundProduct)
-
-
-
-
-
 
             if (item._id === id && item.price === price) {
                 if (value === 'inc') {

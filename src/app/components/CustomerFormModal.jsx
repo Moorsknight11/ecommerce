@@ -1,5 +1,5 @@
 // components/CustomerFormModal.jsx
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 export default function CustomerFormModal({commande, isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -9,6 +9,19 @@ export default function CustomerFormModal({commande, isOpen, onClose }) {
     email: '',
     commande:commande
   });
+useEffect(() => {
+  console.log('Commande updated:', commande);
+  // Update the formData when commande changes
+  setFormData(prevFormData => ({
+    ...prevFormData, // Spread the previous formData
+    commande: commande, // Update the 'commande' field
+  }));
+}, [commande]); // This will run every time 'commande' changes
+
+useEffect(() => {
+  // Log updated formData after it changes
+  console.log('FormData updated:', formData);
+}, [formData]); // This effect runs whenever formData is updated
   const styles = {
     overlay: {
       position: 'fixed',
@@ -49,9 +62,9 @@ export default function CustomerFormModal({commande, isOpen, onClose }) {
       [name]: value,
     });
   };
-  const sendEmailCommand = async () =>{
+  const sendEmailCommand = () =>{
    
-    const response = await fetch('/api/command', {
+    const response = fetch('/api/command', {
       method: 'POST',
       body: JSON.stringify(formData),
 

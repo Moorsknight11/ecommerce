@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlineLeft, AiOutlineShopping, AiOutlinePlus } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
@@ -8,7 +8,7 @@ import { useStateContext } from '../../../context/StateContext';
 import CustomerFormModal from './CustomerFormModal';
 
 function Cart() {
-
+  const [selectedFinal, setselectedFinal] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -16,33 +16,11 @@ function Cart() {
   const cartRef = useRef()
 
   const {
-    selectedSize, onRemove, setSelectedSize, setTotalPrice, toggleCartItemQuantity, totalPrice, totalQuantities, setShowCart, selectedSizes
+    setSelectedSizes,selectedSize, onRemove, setSelectedSize, setTotalPrice, toggleCartItemQuantity, totalPrice, totalQuantities, setShowCart, selectedSizes
   } = useStateContext()
   console.log(selectedSizes)
-  async function handleCheckout() {
 
 
-
-    // const stripe = await getStripe();
-    // const response = await fetch('/api/stripe', {
-    //   method: 'POST',
-    //   headers:
-    //   {
-    //     'Content-Type': 'application/json',
-
-    //   },
-    //   body: JSON.stringify(selectedSizes),
-    // });
-    // if (response.statusCode === 500) return
-    // const data = await response.json();
-    // console.log(data)
-    // toast.loading('Redirecting...');
-    // stripe.redirectToCheckout({ sessionId: data.id })
-
-
-
-
-  }
   return (
     <div className="cart-wrapper" ref={cartRef}>
 
@@ -77,16 +55,22 @@ function Cart() {
                 </div>
                 <div className="flex bottom">
                   <div>
-                    <p style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="quantity-desc">
-                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="minus" onClick={() => toggleCartItemQuantity(item._id, item.price, 'dec')}>
-                        <AiOutlineMinus style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} />
+                    <p style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="quantity-desc">
+                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="minus" onClick={() => {
+                        toggleCartItemQuantity(item._id, item.price, 'dec')
+
+                      }}>
+                        <AiOutlineMinus style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} />
                       </span>
-                      <span style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="num">
+                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="num">
                         {item.quantity}
                       </span>
 
-                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="plus" onClick={() => toggleCartItemQuantity(item._id, item.price, 'inc')}>
-                        <AiOutlinePlus style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }} />
+                      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="plus" onClick={() => {
+                        toggleCartItemQuantity(item._id, item.price, 'inc')
+
+                      }}>
+                        <AiOutlinePlus style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} />
                       </span>
 
 
