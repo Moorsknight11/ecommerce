@@ -8,7 +8,8 @@ export default async function handler(req, res) {
             to: 'hajjejhazem063@gmail.com', // Recipient address
             subject: 'Commande commande!', // Subject line
             text: "Une commande est là! de la part de "+JSON.parse(req.body).name+ " son email est: "+JSON.parse(req.body).email+" details de la commande est: "+
-            JSON.parse(req.body).commande 
+            JSON.parse(req.body).commande+" et son telephone est: "+JSON.parse(req.body).phone+ " et son addresse est: "+JSON.parse(req.body).address
+            // HTML content for email (optional)
             // HTML content for email (optional)
         });
         await transporter.sendMail({
