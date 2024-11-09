@@ -63,20 +63,39 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
       [name]: value,
     });
   };
-  const sendEmailCommand = () => {
+  const sendEmailCommand = async () => {
+    try {
+      const response = await fetch('/api/command', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Ensure JSON content-type header
+        },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json()
+      console.log(result)
+      if(result){
 
-    const response = fetch('/api/command', {
-      method: 'POST',
-      body: JSON.stringify(formData),
+        const response = await fetch('/api/aftercommand', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Ensure JSON content-type header
+          },
+          body: JSON.stringify(result)
+        });
 
-    });
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error); // Logs any errors
+    }
+  };
 
-  }
-  const handleSubmit = (e) => {
+
+  function handleSubmit(e) {
     e.preventDefault();
     console.log('Form Data:', formData);
     onClose(); // Close modal after submitting
-  };
+  }
 
   if (!isOpen) return null;
 

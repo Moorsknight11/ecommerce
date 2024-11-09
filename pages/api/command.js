@@ -1,60 +1,110 @@
 import transporter from "./transporter";
 import db from "../../lib/db";
+
 export default async function handler(req, res) {
     try {
+
         // Send email
-        console.log(req.body)
+        console.log("send email", req.body)
+
+        async function insertCommande() {
+            const sql = `INSERT INTO commande
+            (content,user_id)
+            VALUES(?,?)`;
+
+            // Sample values; adjust them according to your application's needs
+            const values = [
+                req.body.commande,
+                req.body.phone
+                // total_amount (replace with actual amount)
+
+            ];
 
 
-        const sql = `INSERT INTO commande
-        (content)
-        VALUES(?)`;
+            await db.query(sql, values, (error, results) => {
+                if (error) {
+                    console.error("Database error:", error);
+                    // Send error response if there's a database error
+                    return res.status(500).json({ success: false, message: 'Database error', error });
+                }
 
-        // Sample values; adjust them according to your application's needs
-        const values = [
-            JSON.parse(req.body).commande
-            // total_amount (replace with actual amount)
-
-        ];
-
-        function queryDatabase(sql, values) {
-            return new Promise((resolve, reject) => {
-                db.query(sql, values, (error, results) => {
-                    if (error) {
-                        console.error("Database error:", error);
-                        reject(error);
-                    } else {
-                        resolve(results);
-                    }
-                });
+                // Send success response with insert ID
+                console.log(results)
+                return res.status(200).json({ success: true, message: 'Commande inserted', commandeId: results.insertId })
             });
         }
 
-        const results = await queryDatabase(sql, values)
 
 
-        const insertedId = results.inserteId
 
-        console.log(req.body)
-        await transporter.sendMail({
-            from: JSON.parse(req.body).email, // Sender address
-            to: 'hajjejhazem063@gmail.com', // Recipient address
-            subject: 'Commande commande!', // Subject line
-            text: "Une commande est là! de la part de " + JSON.parse(req.body).name + " son email est: " + JSON.parse(req.body).email + " details de la commande est: " +
-                JSON.parse(req.body).commande + " et son telephone est: " + JSON.parse(req.body).phone + " et son addresse est: " + JSON.parse(req.body).address
-            // HTML content for email (optional)
-            // HTML content for email (optional)
-        });
-        await transporter.sendMail({
-            from: "altinsoylar11@gmail.com", // Sender address
-            to: JSON.parse(req.body).email, // Recipient address
-            subject: 'Commande bien reçu!', // Subject line
-            text: "Merci pour votre confiance, Nous avons reçu votre commande!"
-            // HTML content for email (optional)
-        });
-        console.log('command executed successfully');
+        insertCommande().then(sendEmails())
+
+
+        //     function getInsertedId(phone) {
+        //         const sqlSelect = `SELECT * FROM commande
+        // WHERE user_id = ? 
+        // ORDER BY created_at DESC
+        // LIMIT 1`;
+
+        //         const selectValues = [
+        //             phone
+        //         ]
+
+
+        //         db.query(sqlSelect, selectValues, (error, results) => {
+        //             if (error) {
+        //                 console.error("Database error:", error);
+        //                 res.status(500).json({ message: 'Database error' });
+        //             } else {
+        //                 if (results && results.length > 0) {
+        //                     newestCommande = results[0]; // Save the newest record to the variable
+        //                     console.log("Newest commande:", newestCommande);
+        //                     res.status(200).json({ message: 'Success', data: newestCommande });
+        //                 } else {
+        //                     console.log("No records found.");
+        //                     res.status(404).json({ message: 'No record found' });
+        //                 }
+        //             }
+        //         })
+        //     }
+
+        async function sendEmails() {
+            try {
+                await transporter.sendMail({
+                    from:req.body.email, // Sender address
+                    to: 'hajjejhazem063@gmail.com', // Recipient address
+                    subject: 'Commande commande!', // Subject line
+                    text: "Une commande est là! de la part de " + req.body.name +
+                        " son email est: " + req.body.email +
+                        " details de la commande est: " + req.body.commande +
+                        " et son telephone est: " + req.body.phone +
+                        " et son addresse est: " + req.body.address
+    
+                });
+                console.log("Notification email sent to admin.");
+            } catch (error) {
+                console.error("Error sending admin notification email:", error);
+            }
+
+            try {
+                await transporter.sendMail({
+                    from: process.env.SMTP_USER, // Sender address
+                    to: req.body.email, // Recipient address
+                    subject: 'Commande bien reçu!', // Subject line
+                    text: "Merci pour votre confiance, Nous avons reçu votre commande!"
+                });
+                console.log("Confirmation email sent to user.");
+            } catch (error) {
+                console.error("Error sending confirmation email to user:", error);
+            }
+
+            console.log('Command executed successfully');
+            res.status(200).json({ message: req.body.phone,email:req.body.email });
+        }
+
     } catch (error) {
         console.error('Error sending verification email:', error);
         throw new Error('Failed to send verification email');
+
     }
 }
