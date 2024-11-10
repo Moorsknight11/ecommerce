@@ -15,7 +15,7 @@ export default async function handler(req, res) {
             // Sample values; adjust them according to your application's needs
             const values = [
                 req.body.commande,
-                req.body.phone
+                parseInt(req.body.phone)
                 // total_amount (replace with actual amount)
 
             ];

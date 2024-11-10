@@ -66,7 +66,7 @@ const AddTransaction = () => {
                     <input
                         type="text"
                         id="commande_id"
-                        name="command_id"
+                        name="commande_id"
                         value={formData.commande_id}
                         onChange={handleChange}
                         required

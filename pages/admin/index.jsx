@@ -144,6 +144,9 @@ const AddProductForm = () => {
       <Link style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} href={`admin/AddTransaction`}>
         Add transaction
       </Link>
+      <Link style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} href={`admin/getTransactions`}>
+        Get transactions
+      </Link>
       <h2>Add New Product</h2>
       <form encType="multipart/form-data" onSubmit={handleSubmit}>
         {/* Product Name */}
