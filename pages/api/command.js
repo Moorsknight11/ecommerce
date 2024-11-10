@@ -41,7 +41,7 @@ export default async function handler(req, res) {
                         from: process.env.SMTP_USER, // Sender address
                         to: req.body.email, // Recipient address
                         subject: 'Commande bien reçu!', // Subject line
-                        text: "Merci pour votre confiance, Nous avons reçu votre commande! votre nuemro de coammande est: " + data[0].insertId
+                        text: "Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est: " + data[0].insertId
                     });
                     console.log("Confirmation email sent to user.");
                 } catch (error) {
@@ -152,7 +152,8 @@ export default async function handler(req, res) {
 
 
 
-        insertCommande().then(sendEmails())
+        await insertCommande()
+        await sendEmails()
     } catch (error) {
         console.error('Error sending verification email:', error);
         throw new Error('Failed to send verification email');
