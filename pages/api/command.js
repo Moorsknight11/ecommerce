@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
                 // Send success response with insert ID
                 console.log(results)
-                return res.status(200).json({ success: true, message: 'Commande inserted', commandeId: results.insertedId })
+
 
             }).then(data => {
 
