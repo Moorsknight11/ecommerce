@@ -58,9 +58,6 @@ export default async function handler(req, res) {
 
 
 
-        insertCommande().then(sendEmails())
-
-
         //     function getInsertedId(phone) {
         //         const sqlSelect = `SELECT * FROM commande
         // WHERE user_id = ? 
@@ -119,7 +116,7 @@ export default async function handler(req, res) {
                     }
 
                     // Send success response with insert ID
-
+                    console.log(results)
                 }).then(data => {
                     console.log(data)
                     transporter.sendMail({
@@ -153,9 +150,16 @@ export default async function handler(req, res) {
             res.status(200).json({ message: req.body.phone, email: req.body.email });
         }
 
+
+
+        await insertCommande()
+        await sendEmails()
     } catch (error) {
         console.error('Error sending verification email:', error);
         throw new Error('Failed to send verification email');
 
     }
+
+
+
 }
