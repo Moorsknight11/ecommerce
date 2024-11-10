@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import EditableTable from './EditableTable';
 
-const getTransactions = () => {
+const GetTransactions = () => {
 
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
@@ -53,4 +53,4 @@ const getTransactions = () => {
     )
 }
 
-export default getTransactions
+export default GetTransactions
