@@ -74,17 +74,17 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
       });
       const result = await response.json()
       console.log(result)
-      if(result){
+      // if(result){
 
-        const response = await fetch('/api/aftercommand', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Ensure JSON content-type header
-          },
-          body: JSON.stringify(result)
-        });
+      //   const response = await fetch('/api/aftercommand', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json', // Ensure JSON content-type header
+      //     },
+      //     body: JSON.stringify(result)
+      //   });
 
-      }
+      // }
     } catch (error) {
       console.error("Error during fetch:", error); // Logs any errors
     }
