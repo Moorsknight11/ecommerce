@@ -119,8 +119,7 @@ export default async function handler(req, res) {
                     }
 
                     // Send success response with insert ID
-    
-                    return results
+
                 }).then(data => {
                     console.log(data)
                     transporter.sendMail({
