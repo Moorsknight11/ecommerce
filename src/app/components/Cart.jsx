@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState,useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlineLeft, AiOutlineShopping, AiOutlinePlus } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
@@ -16,7 +16,7 @@ function Cart() {
   const cartRef = useRef()
 
   const {
-    setSelectedSizes,selectedSize, onRemove, setSelectedSize, setTotalPrice, toggleCartItemQuantity, totalPrice, totalQuantities, setShowCart, selectedSizes
+    setSelectedSizes, selectedSize, onRemove, setSelectedSize, setTotalPrice, toggleCartItemQuantity, totalPrice, totalQuantities, setShowCart, selectedSizes
   } = useStateContext()
   console.log(selectedSizes)
 
@@ -44,13 +44,13 @@ function Cart() {
         <div className='product-container'>
           {selectedSizes.length >= 1 && selectedSizes.map((item, index) => (
             <div className="product flex-col md:flex-row" key={index}>
-              <img src={""} className='cart-product-image' alt="product" />
+              <img src={item.picture} className='cart-product-image' alt="product" />
               <div className='item-desc'>
-                <div className='flex top'>
+                <div className='flex top flex-top'>
                   <h5>
-                    {item.name} {item.size} $ {item.price}
+                    {item.name} {item.size}
                   </h5>
-
+                  <div style={{display:"flex",gap:"15px"}}> <h5 style={{textDecoration:"line-through",textDecorationColor:"red"}}> $ {item.pricewithoutdiscount}</h5> <h5> $ {item.price}</h5></div>
 
                 </div>
                 <div className="flex bottom">
@@ -100,7 +100,7 @@ function Cart() {
                 Subtotal:
               </h3>
               <h3>
-                ${totalPrice}
+                $ {totalPrice}
               </h3>
 
             </div>

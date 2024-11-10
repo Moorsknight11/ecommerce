@@ -86,7 +86,7 @@ export const StateContext = ({ children }) => {
             console.log('yesssssssssssssssssss')
             const updatedCartItems = selectedSizes.map(cartProduct => {
                 if (cartProduct._id === product._id) {
-                    setTotalPrice(prevTotalPrice => prevTotalPrice + parseFloat(product.price) * qty);
+                    setTotalPrice(prevTotalPrice => prevTotalPrice + (parseFloat(product.price)-parseFloat(product.price)*product.discount/100) * qty);
                     setTotalQuantities(prevTotalQuantities => prevTotalQuantities + qty);
                     return {
                         ...cartProduct,
@@ -99,12 +99,12 @@ export const StateContext = ({ children }) => {
 
         }
         else {
-            setTotalPrice(prevTotalPrice => prevTotalPrice + parseFloat(product.price) * qty);
+            setTotalPrice(prevTotalPrice => prevTotalPrice + (parseFloat(product.price)-parseFloat(product.price)*product.discount/100) * qty);
             setTotalQuantities(prevTotalQuantities => prevTotalQuantities + qty);
 
             setSelectedSizes(prevSizes => {
                 // Create a new size object
-                const newSizeObj = { _id: product.product_id, quantity: qty, price: parseFloat(product.price) };
+                const newSizeObj = { name:product.name,description:product.description,_id: product.product_id, quantity: qty,pricewithoutdiscount:parseFloat(product.price), price: (parseFloat(product.price)-parseFloat(product.price)*product.discount/100),picture:product.images_urls.split(',')[0],discount:product.discount};
 
                 // Push the new size object to the previous sizes array
                 return [...prevSizes, newSizeObj,];
