@@ -120,7 +120,7 @@ export default async function handler(req, res) {
                 }).then(data => {
                     console.log(data)
                     transporter.sendMail({
-                        from: req.body.email, // Sender address
+                        from: process.env.SMTP_USER, // Sender address
                         to: 'hajjejhazem063@gmail.com', // Recipient address
                         subject: 'Commande commande!', // Subject line
                         text: "Une commande est là! de la part de " + req.body.name +
@@ -152,8 +152,7 @@ export default async function handler(req, res) {
 
 
 
-        await insertCommande()
-        await sendEmails()
+        insertCommande().then(sendEmails())
     } catch (error) {
         console.error('Error sending verification email:', error);
         throw new Error('Failed to send verification email');
