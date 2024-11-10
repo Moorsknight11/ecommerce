@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         console.log(req.body)
 
         const insertTransaction = (formData) => {
-            let { name, address, phone, email, tranString } = formData;
+            let { name, address, phone, email, tranString,commande_id } = formData;
             const calculateTotalPrice = (products) => {
                 return products.reduce((total, product) => {
                     return total + (product.quantity * product.price);
@@ -25,12 +25,13 @@ export default async function handler(req, res) {
 
             // Define the SQL query for inserting transaction data
             const sql = `INSERT INTO transactions 
-                         (customer_id, total_amount, payment_method, product_id) 
-                         VALUES (?, ?, ?, ?)`;
+                         (customer_id,commande_id, total_amount, payment_method, product_id) 
+                         VALUES (?,?, ?, ?, ?)`;
 
             // Sample values; adjust them according to your application's needs
             const values = [
                 phone + ' / ' + email + ' / ' + address + ' / ' + name,
+                commande_id,
                 totalAmount,                  // customer_id
                 // total_amount (replace with actual amount)
                 'cash à la livraison',

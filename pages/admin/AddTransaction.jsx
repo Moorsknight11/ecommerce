@@ -10,6 +10,7 @@ const AddTransaction = () => {
         address: '',
         phone: '',
         email: '',
+        commande_id:'',
         tranString: '',
 
     });
@@ -37,6 +38,7 @@ const AddTransaction = () => {
                     address: '',
                     phone: '',
                     email: '',
+                    commande_id:'',
                     tranString: '',
 
                 })
@@ -59,6 +61,17 @@ const AddTransaction = () => {
             <form>
                 <textarea id="tranString"
                     name="tranString" onChange={handleChange} type="text" placeholder="enter the command string"></textarea>
+                        <div>
+                    <label htmlFor="commande_id">commande Id:</label>
+                    <input
+                        type="text"
+                        id="commande_id"
+                        name="command_id"
+                        value={formData.commande_id}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
                 <div>
                     <label htmlFor="name">Name:</label>
                     <input
