@@ -31,23 +31,23 @@ export default async function handler(req, res) {
                 console.log(results)
                 return res.status(200).json({ success: true, message: 'Commande inserted', commandeId: results.insertedId })
 
-            }).then(data=>{
+            }).then(data => {
 
 
-console.log(data)
+                console.log(data)
 
                 try {
                     transporter.sendMail({
                         from: process.env.SMTP_USER, // Sender address
                         to: req.body.email, // Recipient address
                         subject: 'Commande bien reçu!', // Subject line
-                        text: "Merci pour votre confiance, Nous avons reçu votre commande! votre nuemro de coammande est: "+data[0].insertId
+                        text: "Merci pour votre confiance, Nous avons reçu votre commande! votre nuemro de coammande est: " + data[0].insertId
                     });
                     console.log("Confirmation email sent to user.");
                 } catch (error) {
                     console.error("Error sending confirmation email to user:", error);
                 }
-    
+
             })
 
 
@@ -111,7 +111,6 @@ console.log(data)
 
 
 
-                var insertedId;
                 await db.query(sql1, values1, (error, results) => {
                     if (error) {
                         console.error("Database error:", error);
@@ -120,9 +119,8 @@ console.log(data)
                     }
 
                     // Send success response with insert ID
-                    console.log(results)
-                    insertedId = results.user_id;
-                    return results.user_id
+    
+                    return results
                 }).then(data => {
                     console.log(data)
                     transporter.sendMail({
@@ -151,7 +149,7 @@ console.log(data)
                 console.error("Error sending admin notification email:", error);
             }
 
-            
+
             console.log('Command executed successfully');
             res.status(200).json({ message: req.body.phone, email: req.body.email });
         }
