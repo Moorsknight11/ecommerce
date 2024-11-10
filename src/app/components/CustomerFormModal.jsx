@@ -102,13 +102,13 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
   return (
     <div style={styles.overlay}>
       <div style={styles.modal}>
-        <button onClick={onClose} style={styles.closeButton}>
+        <button className='button' onClick={onClose} style={styles.closeButton}>
           &times;
         </button>
         <h1>Customer Information</h1>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name">Name:</label>
+            <label className='formLabels' htmlFor="name">Name:</label>
             <input
               type="text"
               id="name"
@@ -119,7 +119,7 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
             />
           </div>
           <div>
-            <label htmlFor="address">Address:</label>
+            <label className='formLabels' htmlFor="address">Address:</label>
             <input
               type="text"
               id="address"
@@ -130,7 +130,7 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
             />
           </div>
           <div>
-            <label htmlFor="phone">Phone:</label>
+            <label className='formLabels' htmlFor="phone">Phone:</label>
             <input
               type="tel"
               id="phone"
@@ -141,7 +141,7 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
             />
           </div>
           <div>
-            <label htmlFor="email">Email:</label>
+            <label className='formLabels' htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
@@ -151,7 +151,7 @@ export default function CustomerFormModal({ commande, isOpen, onClose }) {
               required
             />
           </div>
-          <button onClick={sendEmailCommand} type="submit">Submit</button>
+          <button className='button' onClick={sendEmailCommand} type="submit">Submit</button>
         </form>
       </div>
     </div>

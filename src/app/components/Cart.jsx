@@ -105,7 +105,7 @@ function Cart() {
 
             </div>
             <div className='btn-container'>
-              <button onClick={openModal}>Proceed to Checkout</button>
+              <button className='button' onClick={openModal}>Proceed to Checkout</button>
 
               {/* Modal component */}
               <CustomerFormModal commande={JSON.stringify(selectedSizes)} isOpen={isModalOpen} onClose={closeModal} />
