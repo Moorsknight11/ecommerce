@@ -36,7 +36,7 @@ export default async function handler(req, res) {
                     to: req.body.email, // Change to your recipient
                     from: "altinsoylar11@gmail.com", // Change to your verified sender
                     subject: 'Sending with SendGrid is Fun',
-                    html: `<strong>Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est:  ${data[0].insertId},</strong>`,
+                    html: `<strong style="color:red;background-color:yellow;">Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est:  ${data[0].insertId},</strong>`,
                 }
                 sgMail
                     .send(msg)
