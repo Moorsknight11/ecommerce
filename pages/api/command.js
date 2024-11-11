@@ -32,38 +32,40 @@ export default async function handler(req, res) {
             }).then(data => {
 
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-                // const calculateTotalPrice = (products) => {
-                //     return products.reduce((total, product) => {
-                //         return total + (product.quantity * product.price);
-                //     }, 0);
-                // };
-
-                // Remove surrounding single quotes if they exist
-
-                // Parse the string to convert it into an array of objects
-
-                // Calculate the total price of all products in the order
-
-                // const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
-                // const dynamicData = {
-                //     name: req.body.name,
-                //     orderNumber: data[0].insertId,
-                //     total: totalAmount,
-                //     items: JSON.parse(req.body.commande),
-                //   };
+                const calculateTotalPrice = (products) => {
+                    return products.reduce((total, product) => {
+                        return total + (product.quantity * product.price);
+                    }, 0);
+                };
 
 
-                // const msg = {
-                //     to: req.body.email, // Recipient's email
-                //     from: "altinsoylar11@gmail.com", // Must match a verified sender
-                //     templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
-                //     dynamic_template_data: dynamicData, // Data to personalize the template
-                //   };
+
+                const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
+                const dynamicData = {
+                    name: req.body.name,
+                    orderNumber: data[0].insertId,
+                    total: totalAmount,
+                    items: JSON.parse(req.body.commande),
+                  };
+
+
                 const msg = {
-                    to: req.body.email, // Change to your recipient
-                    from: "altinsoylar11@gmail.com", // Change to your verified sender
-                    subject: 'Sending with SendGrid is Fun',
-                    html: ``}
+                    to: req.body.email, // Recipient's email
+                    from: "altinsoylar11@gmail.com", // Must match a verified sender
+                    templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
+                    dynamicTemplateData: {
+                        name: req.body.name,
+                        email:req.body.email,
+                        phone:req.body.phone,
+                        total_price: totalAmount,
+                        items: JSON.parse(req.body.commande)
+                      }, // Data to personalize the template
+                  };
+                // const msg = {
+                //     to: req.body.email, // Change to your recipient
+                //     from: "altinsoylar11@gmail.com", // Change to your verified sender
+                //     subject: 'Sending with SendGrid is Fun',
+                //     html: ``}
                 sgMail
                     .send(msg)
                     .then(() => {
