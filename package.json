@@ -46,6 +46,9 @@
   "@sanity/vision": "^3.28.0",
  
    
+  "@sendgrid/mail": "^8.1.4",
+ 
+   
   "@stripe/stripe-js": "^1.25.0",
  
    

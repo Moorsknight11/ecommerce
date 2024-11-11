@@ -32,21 +32,37 @@ export default async function handler(req, res) {
 
 
             }).then(data => {
-
+                const sgMail = require('@sendgrid/mail')
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+                const msg = {
+                    to: req.body.email, // Change to your recipient
+                    from: process.env.SMTP_USER, // Change to your verified sender
+                    subject: 'Sending with SendGrid is Fun',
+                    text: 'and easy to do anywhere, even with Node.js',
+                    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                }
+                sgMail
+                    .send(msg)
+                    .then(() => {
+                        console.log('Email sent')
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
 
                 console.log(data)
 
-                try {
-                    transporter.sendMail({
-                        from: process.env.SMTP_USER, // Sender address
-                        to: req.body.email, // Recipient address
-                        subject: 'Commande bien reçu!', // Subject line
-                        text: "Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est: " + data[0].insertId
-                    });
-                    console.log("Confirmation email sent to user.");
-                } catch (error) {
-                    console.error("Error sending confirmation email to user:", error);
-                }
+                // try {
+                //     transporter.sendMail({
+                //         from: process.env.SMTP_USER, // Sender address
+                //         to: req.body.email, // Recipient address
+                //         subject: 'Commande bien reçu!', // Subject line
+                //         text: "Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est: " + data[0].insertId
+                //     });
+                //     console.log("Confirmation email sent to user.");
+                // } catch (error) {
+                //     console.error("Error sending confirmation email to user:", error);
+                // }
 
             })
 
@@ -118,19 +134,47 @@ export default async function handler(req, res) {
                     // Send success response with insert ID
                     console.log(results)
                 }).then(data => {
-                    console.log(data)
-                    transporter.sendMail({
-                        from: process.env.SMTP_USER, // Sender address
-                        to: 'hajjejhazem063@gmail.com', // Recipient address
-                        subject: 'Commande commande!', // Subject line
+
+
+
+                    const sgMail = require('@sendgrid/mail')
+                    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+                    const msg = {
+                        to: 'hajjejhazem063@gmail.com', // Change to your recipient
+                        from: process.env.SMTP_USER, // Change to your verified sender
+                        subject: 'Sending with SendGrid is Fun',
                         text: "Une commande est là! de la part de " + req.body.name +
                             " son email est: " + req.body.email +
                             " details de la commande est: " + req.body.commande +
                             " et son telephone est: " + req.body.phone +
                             " et son addresse est: " + req.body.address +
-                            " et le numero de la commande est: " + data[0][0].id
+                            " et le numero de la commande est: " + data[0][0].id,
 
-                    });
+                        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                    }
+                    sgMail
+                        .send(msg)
+                        .then(() => {
+                            console.log('Email sent')
+                        })
+                        .catch((error) => {
+                            console.error(error)
+                        })
+
+
+                    console.log(data)
+                    // transporter.sendMail({
+                    //     from: process.env.SMTP_USER, // Sender address
+                    //     to: 'hajjejhazem063@gmail.com', // Recipient address
+                    //     subject: 'Commande commande!', // Subject line
+                    //     text: "Une commande est là! de la part de " + req.body.name +
+                    //         " son email est: " + req.body.email +
+                    //         " details de la commande est: " + req.body.commande +
+                    //         " et son telephone est: " + req.body.phone +
+                    //         " et son addresse est: " + req.body.address +
+                    //         " et le numero de la commande est: " + data[0][0].id
+
+                    // });
                     console.log("Notification email sent to admin.");
                 })
 
@@ -147,7 +191,7 @@ export default async function handler(req, res) {
 
 
             console.log('Command executed successfully');
-            res.status(200).json({ message: req.body.phone, email: req.body.email });
+            await res.status(200).json({ message: req.body.phone, email: req.body.email });
         }
 
 
