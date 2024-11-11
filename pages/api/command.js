@@ -44,6 +44,7 @@ export default async function handler(req, res) {
                 const dynamicData = {
                     name: req.body.name,
                     orderNumber: data[0].insertId,
+
                     total: totalAmount,
                     items: JSON.parse(req.body.commande),
                   };
