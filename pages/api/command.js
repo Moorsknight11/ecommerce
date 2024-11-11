@@ -1,10 +1,8 @@
 import transporter from "./transporter";
 import db from "../../lib/db";
+import sgMail from '@sendgrid/mail';
 export default async function handler(req, res) {
-    try {
-
-        // Send email
-        console.log("send email", req.body)
+    try{
 
         async function insertCommande() {
             const sql = `INSERT INTO commande
@@ -32,25 +30,24 @@ export default async function handler(req, res) {
 
 
             }).then(data => {
-                const sgMail = require('@sendgrid/mail')
+
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                 const msg = {
                     to: req.body.email, // Change to your recipient
-                    from: process.env.SMTP_USER, // Change to your verified sender
+                    from: "altinsoylar11@gmail.com", // Change to your verified sender
                     subject: 'Sending with SendGrid is Fun',
-                    text: 'and easy to do anywhere, even with Node.js',
-                    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                    html: `<strong>Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est:  ${data[0].insertId},</strong>`,
                 }
                 sgMail
                     .send(msg)
                     .then(() => {
-                        console.log('Email sent')
+                        console.log('first Email sent')
                     })
                     .catch((error) => {
+                        console.log(error.response.body.errors)
                         console.error(error)
                     })
 
-                console.log(data)
 
                 // try {
                 //     transporter.sendMail({
@@ -137,32 +134,30 @@ export default async function handler(req, res) {
 
 
 
-                    const sgMail = require('@sendgrid/mail')
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const msg = {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
-                        from: process.env.SMTP_USER, // Change to your verified sender
+                        from: "altinsoylar11@gmail.com", // Change to your verified sender
                         subject: 'Sending with SendGrid is Fun',
-                        text: "Une commande est là! de la part de " + req.body.name +
-                            " son email est: " + req.body.email +
-                            " details de la commande est: " + req.body.commande +
-                            " et son telephone est: " + req.body.phone +
-                            " et son addresse est: " + req.body.address +
-                            " et le numero de la commande est: " + data[0][0].id,
-
-                        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                        html: `<strong> Une commande est là! de la part de  ${req.body.name} +
+                             son email est:  ${req.body.email} 
+                            details de la commande est:   ${req.body.commande} 
+                             et son telephone est:   ${req.body.phone} 
+                            et son addresse est:  ${req.body.address} 
+                             et le numero de la commande est:  ${data[0][0].id},</strong>`,
                     }
                     sgMail
                         .send(msg)
                         .then(() => {
-                            console.log('Email sent')
+                            console.log('second Email sent')
                         })
                         .catch((error) => {
+                            console.log(error.response.body.errors)
                             console.error(error)
                         })
 
 
-                    console.log(data)
+
                     // transporter.sendMail({
                     //     from: process.env.SMTP_USER, // Sender address
                     //     to: 'hajjejhazem063@gmail.com', // Recipient address
