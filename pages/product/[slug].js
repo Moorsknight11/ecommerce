@@ -46,7 +46,15 @@ const ProductDetails = ({ product, products }) => {
 
         setTestName(name)
         setTestDetails(details)
+        if(images_urls.split(',')){
         setDownloadedImages(images_urls.split(','))
+        }
+        else{
+            let array1=[]
+            array1.push(images_urls)
+            setDownloadedImages(array1)
+
+        }
 
 
     }, [name, details])
@@ -442,7 +450,7 @@ const ProductDetails = ({ product, products }) => {
                         </div>
                         <div className="small-images-container">
                             {
-                                images_urls.split(",")?.map((item, i) => (
+                                downloadedImages?.map((item, i) => (
                                     <img
                                         alt={item.name}
                                         key={i}

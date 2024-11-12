@@ -11,7 +11,7 @@ function Product({ product: {name,images_urls} }) {
  
         <div className="product-card">
           <img
-            src={images_urls.split(',')[0]}
+            src={images_urls.split(',')?images_urls.split(',')[0]:images_urls}
             width={250}
             height={250}
             className="product-image"
