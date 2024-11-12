@@ -61,7 +61,8 @@ export default async function handler(req, res) {
                         phone:req.body.phone,
                         total_price: totalAmount,
                         items: JSON.parse(req.body.commande),
-                        productsNumber:items.length
+                        productsNumber:JSON.parse(req.body.commande).length,
+                        address:req.body.address
                       }, // Data to personalize the template
                   };
                 // const msg = {
