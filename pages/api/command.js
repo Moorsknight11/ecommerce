@@ -171,12 +171,19 @@ export default async function handler(req, res) {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
                         from: "altinsoylar11@gmail.com", // Change to your verified sender
                         subject: 'Sending with SendGrid is Fun',
-                        html: `<strong> Une commande est là! de la part de  ${req.body.name} +
-                             son email est:  ${req.body.email} 
-                            details de la commande est:   ${req.body.commande} 
-                             et son telephone est:   ${req.body.phone} 
-                            et son addresse est:  ${req.body.address} 
-                             et le numero de la commande est:  ${data[0][0].id},</strong>`,
+                      
+                             templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
+                             dynamicTemplateData: {
+                                 orderNumber: data[0].insertId,
+                                 name: req.body.name,
+                                 email:req.body.email,
+                                 phone:req.body.phone,
+                                 total_price: totalAmount,
+                                 items: req.body.commande,
+                                 productsNumber:JSON.parse(req.body.commande).length,
+                                 address:req.body.address
+                               }, // Data to personalize the template
+                           
                     }
                     sgMail
                         .send(msg)
@@ -188,6 +195,12 @@ export default async function handler(req, res) {
                             console.error(error)
                         })
 
+                    //     html: `<strong> Une commande est là! de la part de  ${req.body.name} +
+                    //     son email est:  ${req.body.email} 
+                    //    details de la commande est:   ${req.body.commande} 
+                    //     et son telephone est:   ${req.body.phone} 
+                    //    et son addresse est:  ${req.body.address} 
+                    //     et le numero de la commande est:  ${data[0][0].id},</strong>`,
 
 
                     // transporter.sendMail({
