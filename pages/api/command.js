@@ -174,12 +174,13 @@ export default async function handler(req, res) {
                       
                              templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
                              dynamicTemplateData: {
-                                 orderNumber: data[0].insertId,
+                                 orderNumber: data[0][0].id,
                                  name: req.body.name,
                                  email:req.body.email,
                                  phone:req.body.phone,
                                  total_price: totalAmount,
-                                 items: req.body.commande,
+                                 items: JSON.parse(req.body.commande),
+                                 itemsString:req.body.commande,
                                  productsNumber:JSON.parse(req.body.commande).length,
                                  address:req.body.address
                                }, // Data to personalize the template
