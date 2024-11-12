@@ -41,13 +41,6 @@ export default async function handler(req, res) {
 
 
                 const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
-                const dynamicData = {
-                    name: req.body.name,
-                  
-
-                    total: totalAmount,
-                    items: JSON.parse(req.body.commande),
-                  };
 
 
                 const msg = {
@@ -167,6 +160,16 @@ export default async function handler(req, res) {
 
 
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+                    const calculateTotalPrice = (products) => {
+                        return products.reduce((total, product) => {
+                            return total + (product.quantity * product.price-product.quantity * product.price*product.discount/100);
+                        }, 0);
+                    };
+    
+    
+    
+                    const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
+   
                     const msg = {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
                         from: "altinsoylar11@gmail.com", // Change to your verified sender
