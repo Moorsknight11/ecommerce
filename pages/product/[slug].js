@@ -40,7 +40,7 @@ const ProductDetails = ({ product, products }) => {
 
     const router = useRouter();
     const { slug } = router.query;
-    const { images_urls, discount, name, details, price, prices, _type, colors, _id, description } = savedProduct ? product : "";
+    const { images_urls, discount, name, details, price, prices, _type, colors, _id, description,quantity_in_stock } = savedProduct ? product : "";
     const pricewithdiscount = parseFloat(price) - parseFloat(price) * discount / 100
     useEffect(() => {
 
@@ -497,6 +497,10 @@ const ProductDetails = ({ product, products }) => {
 
                             </p>
 
+                        </div>
+                        <div>
+                            <h4>Disponibilité</h4>  
+                            <h3>{quantity_in_stock>0?"En stock":"rupture de stock"}</h3>
                         </div>
                         <h4>
                             Details:
