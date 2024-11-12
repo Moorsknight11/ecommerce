@@ -53,7 +53,7 @@ export default async function handler(req, res) {
                 const msg = {
                     to: req.body.email, // Recipient's email
                     from: "altinsoylar11@gmail.com", // Must match a verified sender
-                    templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
+                    templateId: 'd-1f3c24154cde4b1ea89b1404041f328e',
                     dynamicTemplateData: {
                         orderNumber: data[0].insertId,
                         name: req.body.name,
