@@ -91,6 +91,7 @@ export const StateContext = ({ children }) => {
                     return {
                         ...cartProduct,
                         quantity: cartProduct.quantity + qty
+                        
                     };
                 }
                 return cartProduct;

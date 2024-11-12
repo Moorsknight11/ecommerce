@@ -34,7 +34,7 @@ export default async function handler(req, res) {
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                 const calculateTotalPrice = (products) => {
                     return products.reduce((total, product) => {
-                        return total + (product.quantity * product.price);
+                        return total + (product.quantity * product.price-product.quantity * product.price*product.discount/100);
                     }, 0);
                 };
 
@@ -60,7 +60,8 @@ export default async function handler(req, res) {
                         email:req.body.email,
                         phone:req.body.phone,
                         total_price: totalAmount,
-                        items: JSON.parse(req.body.commande)
+                        items: JSON.parse(req.body.commande),
+                        productsNumber:items.length
                       }, // Data to personalize the template
                   };
                 // const msg = {
