@@ -32,6 +32,7 @@ const ProductDetails = ({ product, products }) => {
     const [testImage, setTestImage] = useState([])
     const [testName, setTestName] = useState("")
     const [testDetails, setTestDetails] = useState("")
+
     // const [testColors, setTestColors] = useState([])
 
 
@@ -39,8 +40,8 @@ const ProductDetails = ({ product, products }) => {
 
     const router = useRouter();
     const { slug } = router.query;
-    const { images_urls, name, details, price, prices, _type, colors, _id } = savedProduct ? product : "";
-   
+    const { images_urls, discount, name, details, price, prices, _type, colors, _id, description } = savedProduct ? product : "";
+    const pricewithdiscount = parseFloat(price) - parseFloat(price) * discount / 100
     useEffect(() => {
 
         setTestName(name)
@@ -394,7 +395,7 @@ const ProductDetails = ({ product, products }) => {
     let selectedPrice;
 
     const handleBuyNow = () => {
-        onAdd(product, qty,selectedSizePrice)
+        onAdd(product, qty, selectedSizePrice)
         setShowCart(true)
     }
     // console.log(qty); // Now it should log the value
@@ -546,9 +547,16 @@ const ProductDetails = ({ product, products }) => {
                                     )}
                                 </div>
                             ) : (
-                                <h4>
-                                    {price !== undefined ? '$ ' + price : ""}
-                                </h4>
+                                <div style={{ display: "flex" }}>
+                                    <h4 style={{ marginRight: "16px", textDecoration: "line-through", textDecorationColor: "red" }}>
+                                        {price !== undefined ? 'TND ' + price : ""}
+                                    </h4>
+                                    <span> </span>
+                                    <h4>
+                                        {pricewithdiscount !== undefined ? ' TND ' + pricewithdiscount : ""}
+                                    </h4>
+
+                                </div>
                             )}
                             {/* Your other JSX code... */}
                         </div>
@@ -600,13 +608,18 @@ const ProductDetails = ({ product, products }) => {
 
                         </div>
 
-
+                        <div className="description" style={{ marginTop: "20px" }}>
+                            <h3>Description et fiche technique:</h3>
+                            {description.split('//')[0]}<br/>
+                            {description.split('//')[1]}<br/>
+                            {description.split('//')[2]}<br/>
+                        </div>
 
                         <div className="buttons">
                             <button className="add-to-cart" onClick={() => {
                                 {
 
-                                  
+
                                     onAdd(product, qty)
 
 
