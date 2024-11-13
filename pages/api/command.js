@@ -34,7 +34,7 @@ export default async function handler(req, res) {
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                 const calculateTotalPrice = (products) => {
                     return products.reduce((total, product) => {
-                        return total + (product.quantity * product.price-product.quantity * product.price*product.discount/100);
+                        return total + (product.quantity * product.pricewithoutdiscount-product.quantity * product.pricewithoutdiscount*product.discount/100);
                     }, 0);
                 };
 
@@ -162,7 +162,7 @@ export default async function handler(req, res) {
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const calculateTotalPrice = (products) => {
                         return products.reduce((total, product) => {
-                            return total + (product.quantity * product.price-product.quantity * product.price*product.discount/100);
+                            return total + (product.quantity * product.pricewithoutdicsount-product.quantity * product.pricewithoutdiscount*product.discount/100);
                         }, 0);
                     };
     

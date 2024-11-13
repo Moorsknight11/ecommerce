@@ -41,7 +41,7 @@ const ProductDetails = ({ product, products }) => {
     const router = useRouter();
     const { slug } = router.query;
     const { images_urls, discount, name, details, price, prices, _type, colors, _id, description,quantity_in_stock } = savedProduct ? product : "";
-    const pricewithdiscount = parseFloat(price) - parseFloat(price) * discount / 100
+    const pricewithdiscount = parseFloat(price)
     useEffect(() => {
 
         setTestName(name)
