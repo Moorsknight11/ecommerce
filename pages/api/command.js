@@ -38,12 +38,14 @@ export default async function handler(req, res) {
                     }, 0);
                 };
 
+                const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
 
                 const msg = {
                     to: req.body.email, // Recipient's email
                     from: "altinsoylar11@gmail.com", // Must match a verified sender
                     templateId: 'd-1f3c24154cde4b1ea89b1404041f328e',
+                    subject: 'Merci pour votre commande',
                     dynamicTemplateData: {
                         orderNumber: data[0].insertId,
                         name: req.body.name,
@@ -159,19 +161,19 @@ export default async function handler(req, res) {
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const calculateTotalPrice = (products) => {
                         return products.reduce((total, product) => {
-                            return total + (product.quantity * product.pricewithoutdicsount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
+                            return total + (product.quantity * product.pricewithoutdiscount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
                         }, 0);
                     };
 
 
 
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
-      
-    
+
+
                     const msg = {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
                         from: "altinsoylar11@gmail.com", // Change to your verified sender
-                        subject: 'Sending with SendGrid is Fun',
+                        subject: 'Commande Commande',
 
                         templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
                         dynamicTemplateData: {
@@ -181,7 +183,7 @@ export default async function handler(req, res) {
                             phone: req.body.phone,
                             total_price: totalAmount,
                             items: JSON.parse(req.body.commande),
-                            itemsString: JSON.stringify(data1),
+                            itemsString: req.body.commande,
                             productsNumber: JSON.parse(req.body.commande).length,
                             address: req.body.address
                         }, // Data to personalize the template
