@@ -169,7 +169,6 @@ export default async function handler(req, res) {
 
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
-
                     const msg = {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
                         from: "altinsoylar11@gmail.com", // Change to your verified sender
