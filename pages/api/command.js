@@ -38,7 +38,7 @@ export default async function handler(req, res) {
                     }, 0);
                 };
 
-
+                const totalAmount=calculateTotalPrice(JSON.parse(req.body.commande)) 
 
                 const msg = {
                     to: req.body.email, // Recipient's email
