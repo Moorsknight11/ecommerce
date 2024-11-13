@@ -6,7 +6,7 @@ export default function AdminPage() {
     const router = useRouter();
 
     const handleLogin = () => {
-        if (password === 'yourpassword') {
+        if (password === 'yourpassword54445454') {
             sessionStorage.setItem('isAdmin', 'true');
             router.push('/admin'); // Redirect to actual dashboard
         } else {

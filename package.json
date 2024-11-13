@@ -52,6 +52,9 @@
   "@stripe/stripe-js": "^1.25.0",
  
    
+  "@vercel/analytics": "^1.4.0",
+ 
+   
   "canvas-confetti": "^1.5.1",
  
    

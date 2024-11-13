@@ -34,13 +34,10 @@ export default async function handler(req, res) {
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                 const calculateTotalPrice = (products) => {
                     return products.reduce((total, product) => {
-                        return total + (product.quantity * product.pricewithoutdiscount-product.quantity * product.pricewithoutdiscount*product.discount/100);
+                        return total + (product.quantity * product.pricewithoutdiscount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
                     }, 0);
                 };
 
-
-
-                const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
 
                 const msg = {
@@ -50,14 +47,14 @@ export default async function handler(req, res) {
                     dynamicTemplateData: {
                         orderNumber: data[0].insertId,
                         name: req.body.name,
-                        email:req.body.email,
-                        phone:req.body.phone,
+                        email: req.body.email,
+                        phone: req.body.phone,
                         total_price: totalAmount,
                         items: JSON.parse(req.body.commande),
-                        productsNumber:JSON.parse(req.body.commande).length,
-                        address:req.body.address
-                      }, // Data to personalize the template
-                  };
+                        productsNumber: JSON.parse(req.body.commande).length,
+                        address: req.body.address
+                    }, // Data to personalize the template
+                };
                 // const msg = {
                 //     to: req.body.email, // Change to your recipient
                 //     from: "altinsoylar11@gmail.com", // Change to your verified sender
@@ -162,32 +159,33 @@ export default async function handler(req, res) {
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const calculateTotalPrice = (products) => {
                         return products.reduce((total, product) => {
-                            return total + (product.quantity * product.pricewithoutdicsount-product.quantity * product.pricewithoutdiscount*product.discount/100);
+                            return total + (product.quantity * product.pricewithoutdicsount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
                         }, 0);
                     };
-    
-    
-    
+
+
+
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
-   
+      
+    
                     const msg = {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
                         from: "altinsoylar11@gmail.com", // Change to your verified sender
                         subject: 'Sending with SendGrid is Fun',
-                      
-                             templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
-                             dynamicTemplateData: {
-                                 orderNumber: data[0][0].id,
-                                 name: req.body.name,
-                                 email:req.body.email,
-                                 phone:req.body.phone,
-                                 total_price: totalAmount,
-                                 items: JSON.parse(req.body.commande),
-                                 itemsString:req.body.commande,
-                                 productsNumber:JSON.parse(req.body.commande).length,
-                                 address:req.body.address
-                               }, // Data to personalize the template
-                           
+
+                        templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
+                        dynamicTemplateData: {
+                            orderNumber: data[0][0].id,
+                            name: req.body.name,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            total_price: totalAmount,
+                            items: JSON.parse(req.body.commande),
+                            itemsString: JSON.stringify(data1),
+                            productsNumber: JSON.parse(req.body.commande).length,
+                            address: req.body.address
+                        }, // Data to personalize the template
+
                     }
                     sgMail
                         .send(msg)

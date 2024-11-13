@@ -10,7 +10,7 @@ const AddTransaction = () => {
         address: '',
         phone: '',
         email: '',
-        commande_id:'',
+        commande_id: '',
         tranString: '',
 
     });
@@ -26,19 +26,34 @@ const AddTransaction = () => {
     const addTransaction = async () => {
 
         try {
+
+
+            let data1 = JSON.parse(formData.tranString)
+
+            function removeAttribute(data1, attribute) {
+                data1.forEach(item => {
+                    delete item[attribute]; // Removes the attribute from each item
+                });
+            }
+            removeAttribute(data1, 'description');
+            setFormData({
+                ...formData,
+                tranString: JSON.stringify(data1)
+            });
             const response = await fetch('/api/addTransaction', {
                 method: 'POST',
                 body: JSON.stringify(formData),
             })
             const responseData = await response.json();
             console.log('Response Data:', responseData);
+            console.log(formData)
             if (response.ok) {
                 setFormData({
                     name: '',
                     address: '',
                     phone: '',
                     email: '',
-                    commande_id:'',
+                    commande_id: '',
                     tranString: '',
 
                 })
@@ -61,7 +76,7 @@ const AddTransaction = () => {
             <form>
                 <textarea id="tranString"
                     name="tranString" onChange={handleChange} type="text" placeholder="enter the command string"></textarea>
-                        <div>
+                <div>
                     <label htmlFor="commande_id">commande Id:</label>
                     <input
                         type="text"

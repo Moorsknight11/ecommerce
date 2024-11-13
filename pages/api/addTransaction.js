@@ -17,7 +17,7 @@ export default async function handler(req, res) {
             if (tranString.startsWith("'") && tranString.endsWith("'")) {
                 tranString = tranString.slice(1, -1);
             }
-
+         
             // Parse the string to convert it into an array of objects
 
             // Calculate the total price of all products in the order
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
             // Define the SQL query for inserting transaction data
             const sql = `INSERT INTO transactions 
-                         (customer_id,commande_id, total_amount, payment_method, product_id) 
+                         (customer_id,commande_id, total_amount, payment_method,product_id) 
                          VALUES (?,?, ?, ?, ?)`;
 
             // Sample values; adjust them according to your application's needs
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
                 totalAmount,                  // customer_id
                 // total_amount (replace with actual amount)
                 'cash à la livraison',
-                tranString,
+                JSON.parse(tranString)[0].name
 
             ];
 
@@ -61,3 +61,4 @@ export default async function handler(req, res) {
     }
 
 }
+
