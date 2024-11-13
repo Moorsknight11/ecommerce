@@ -166,7 +166,7 @@ export default async function handler(req, res) {
 
 
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
-      
+
     
                     const msg = {
                         to: 'hajjejhazem063@gmail.com', // Change to your recipient
@@ -181,7 +181,7 @@ export default async function handler(req, res) {
                             phone: req.body.phone,
                             total_price: totalAmount,
                             items: JSON.parse(req.body.commande),
-                            itemsString: JSON.stringify(data1),
+                            itemsString: req.body.commande,
                             productsNumber: JSON.parse(req.body.commande).length,
                             address: req.body.address
                         }, // Data to personalize the template
