@@ -153,7 +153,8 @@ export default async function handler(req, res) {
                     }
 
                     // Send success response with insert ID
-                    console.log(results)
+
+                    return results;
                 }).then(data => {
 
 
