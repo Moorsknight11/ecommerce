@@ -157,7 +157,7 @@ export default async function handler(req, res) {
                     return results;
                 }).then(data => {
 
-
+                    console.log(data)
 
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const calculateTotalPrice = (products) => {
@@ -240,8 +240,8 @@ export default async function handler(req, res) {
 
 
 
-     insertCommande().then(sendEmails())
-        
+        insertCommande().then(sendEmails())
+
     } catch (error) {
         console.error('Error sending verification email:', error);
         throw new Error('Failed to send verification email');
