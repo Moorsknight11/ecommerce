@@ -126,7 +126,7 @@ export default async function handler(req, res) {
                     };
 
 
-
+console.log('test')
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
                     const msg = {
