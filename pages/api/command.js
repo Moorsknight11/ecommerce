@@ -16,62 +16,64 @@ export default async function handler(req, res) {
                 // total_amount (replace with actual amount)
 
             ];
+            return new Promise((resolve, reject) => {
 
+                db.query(sql, values, (error, results) => {
+                    if (error) {
+                        console.error("Database error:", error);
+                        // Send error response if there's a database error
+                        return res.status(500).json({ success: false, message: 'Database error', error });
+                    }
 
-            await db.query(sql, values, (error, results) => {
-                if (error) {
-                    console.error("Database error:", error);
-                    // Send error response if there's a database error
-                    return res.status(500).json({ success: false, message: 'Database error', error });
-                }
-
-                // Send success response with insert ID
-                console.log(results)
-
+                    // Send success response with insert ID
+                    resolve(insertId);  // Resolve with insertId
+                });
 
             }).then(data => {
+                return new Promise((resolve, reject) => {
 
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-                const calculateTotalPrice = (products) => {
-                    return products.reduce((total, product) => {
-                        return total + (product.quantity * product.pricewithoutdiscount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
-                    }, 0);
-                };
+                    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+                    const calculateTotalPrice = (products) => {
+                        return products.reduce((total, product) => {
+                            return total + (product.quantity * product.pricewithoutdiscount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
+                        }, 0);
+                    };
 
-                const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
-
-
-                const msg = {
-                    to: req.body.email, // Recipient's email
-                    from: "altinsoylar11@gmail.com", // Must match a verified sender
-                    templateId: 'd-1f3c24154cde4b1ea89b1404041f328e',
-                    subject: 'Merci pour votre commande',
-                    dynamicTemplateData: {
-                        orderNumber: data[0].insertId,
-                        name: req.body.name,
-                        email: req.body.email,
-                        phone: req.body.phone,
-                        total_price: totalAmount,
-                        items: JSON.parse(req.body.commande),
-                        productsNumber: JSON.parse(req.body.commande).length,
-                        address: req.body.address
-                    }, // Data to personalize the template
-                };
-
-                sgMail
-                    .send(msg)
-                    .then(() => {
-                        console.log('first Email sent')
-                    })
-                    .catch((error) => {
-                        console.log(error.response.body.errors)
-                        console.error(error)
-                    })
+                    const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
 
+                    const msg = {
+                        to: req.body.email, // Recipient's email
+                        from: "altinsoylar11@gmail.com", // Must match a verified sender
+                        templateId: 'd-1f3c24154cde4b1ea89b1404041f328e',
+                        subject: 'Merci pour votre commande',
+                        dynamicTemplateData: {
+                            orderNumber: data,
+                            name: req.body.name,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            total_price: totalAmount,
+                            items: JSON.parse(req.body.commande),
+                            productsNumber: JSON.parse(req.body.commande).length,
+                            address: req.body.address
+                        }, // Data to personalize the template
+                    };
 
-                return data[0].insertId
+                    sgMail
+                        .send(msg)
+                        .then(() => {
+                            console.log('first Email sent')
+                        })
+                        .catch((error) => {
+                            console.log(error.response.body.errors)
+                            console.error(error)
+                        })
+
+                    resolve(data);  // Resolve with insertId
+                });
+
             })
+
 
 
 
