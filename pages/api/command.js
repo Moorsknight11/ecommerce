@@ -5,18 +5,19 @@ export default async function handler(req, res) {
     try {
 
         async function insertCommande() {
-            const sql = `INSERT INTO commande
+            return new Promise((resolve, reject) => {
+                const sql = `INSERT INTO commande
             (content,user_id)
             VALUES(?,?)`;
 
-            // Sample values; adjust them according to your application's needs
-            const values = [
-                req.body.commande,
-                parseInt(req.body.phone)
-                // total_amount (replace with actual amount)
+                // Sample values; adjust them according to your application's needs
+                const values = [
+                    req.body.commande,
+                    parseInt(req.body.phone)
+                    // total_amount (replace with actual amount)
 
-            ];
-            return new Promise((resolve, reject) => {
+                ];
+
 
                 db.query(sql, values, (error, results) => {
                     if (error) {
@@ -26,11 +27,10 @@ export default async function handler(req, res) {
                     }
 
                     // Send success response with insert ID
-                    resolve(insertId);  // Resolve with insertId
-                });
+          
 
-            }).then(data => {
-                return new Promise((resolve, reject) => {
+
+                }).then(data => {
 
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const calculateTotalPrice = (products) => {
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
                         templateId: 'd-1f3c24154cde4b1ea89b1404041f328e',
                         subject: 'Merci pour votre commande',
                         dynamicTemplateData: {
-                            orderNumber: data,
+                            orderNumber: data[0].insertId,
                             name: req.body.name,
                             email: req.body.email,
                             phone: req.body.phone,
@@ -69,11 +69,11 @@ export default async function handler(req, res) {
                             console.error(error)
                         })
 
-                    resolve(data);  // Resolve with insertId
+
+
+                    resolve(data[0].insertId);  // Resolve with insertId
                 });
-
             })
-
 
 
 
@@ -83,6 +83,7 @@ export default async function handler(req, res) {
 
 
         async function sendEmails(data) {
+            console.log(data)
             try {
 
 
@@ -113,9 +114,9 @@ export default async function handler(req, res) {
                     // Send success response with insert ID
 
                     return results;
-                }).then(data => {
+                }).then(data1 => {
 
-                    console.log(data)
+                    console.log("thisdata",data1)
 
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const calculateTotalPrice = (products) => {
@@ -135,7 +136,7 @@ export default async function handler(req, res) {
 
                         templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
                         dynamicTemplateData: {
-                            orderNumber: data,
+                            orderNumber: data1[0][0].id,
                             name: req.body.name,
                             email: req.body.email,
                             phone: req.body.phone,
