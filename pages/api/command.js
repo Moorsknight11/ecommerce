@@ -87,7 +87,7 @@ export default async function handler(req, res) {
 
 
                 const sql1 = `SELECT * FROM commande
-                    WHERE commande_id = ? 
+                    WHERE id = ? 
                    `;
 
                 // Sample values; adjust them according to your application's needs
