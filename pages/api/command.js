@@ -127,10 +127,7 @@ export default async function handler(req, res) {
             try {
 
 
-                const sql1 = `SELECT * FROM commande
-                    WHERE user_id = ? 
-                    ORDER BY created_at DESC
-                    LIMIT 1`;
+                const sql1 = `SELECT * FROM commande WHERE user_id = ? ORDER BY created_at DESC`;
 
                 // Sample values; adjust them according to your application's needs
                 const values1 = [
