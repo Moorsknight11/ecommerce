@@ -80,18 +80,17 @@ export default async function handler(req, res) {
 
 
 
-        async function sendEmails() {
+        async function sendEmails(data) {
             try {
 
 
                 const sql1 = `SELECT * FROM commande
-                    WHERE user_id = ? 
-                    ORDER BY created_at DESC
-                    LIMIT 1`;
+                    WHERE commande_id = ? 
+                   `;
 
                 // Sample values; adjust them according to your application's needs
                 const values1 = [
-                    parseInt(req.body.phone)
+                    data
                     // total_amount (replace with actual amount)
 
                 ];
