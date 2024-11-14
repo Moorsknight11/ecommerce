@@ -57,11 +57,7 @@ export default async function handler(req, res) {
                         address: req.body.address
                     }, // Data to personalize the template
                 };
-                // const msg = {
-                //     to: req.body.email, // Change to your recipient
-                //     from: "altinsoylar11@gmail.com", // Change to your verified sender
-                //     subject: 'Sending with SendGrid is Fun',
-                //     html: ``}
+
                 sgMail
                     .send(msg)
                     .then(() => {
@@ -73,18 +69,8 @@ export default async function handler(req, res) {
                     })
 
 
-                // try {
-                //     transporter.sendMail({
-                //         from: process.env.SMTP_USER, // Sender address
-                //         to: req.body.email, // Recipient address
-                //         subject: 'Commande bien reçu!', // Subject line
-                //         text: "Merci pour votre confiance, Nous avons reçu votre commande! votre numero de commande est: " + data[0].insertId
-                //     });
-                //     console.log("Confirmation email sent to user.");
-                // } catch (error) {
-                //     console.error("Error sending confirmation email to user:", error);
-                // }
 
+                return data[0].insertId
             })
 
 
@@ -94,40 +80,14 @@ export default async function handler(req, res) {
 
 
 
-
-        //     function getInsertedId(phone) {
-        //         const sqlSelect = `SELECT * FROM commande
-        // WHERE user_id = ? 
-        // ORDER BY created_at DESC
-        // LIMIT 1`;
-
-        //         const selectValues = [
-        //             phone
-        //         ]
-
-
-        //         db.query(sqlSelect, selectValues, (error, results) => {
-        //             if (error) {
-        //                 console.error("Database error:", error);
-        //                 res.status(500).json({ message: 'Database error' });
-        //             } else {
-        //                 if (results && results.length > 0) {
-        //                     newestCommande = results[0]; // Save the newest record to the variable
-        //                     console.log("Newest commande:", newestCommande);
-        //                     res.status(200).json({ message: 'Success', data: newestCommande });
-        //                 } else {
-        //                     console.log("No records found.");
-        //                     res.status(404).json({ message: 'No record found' });
-        //                 }
-        //             }
-        //         })
-        //     }
-
         async function sendEmails() {
             try {
 
 
-                const sql1 = `SELECT * FROM commande WHERE user_id = ? ORDER BY created_at DESC`;
+                const sql1 = `SELECT * FROM commande
+                    WHERE user_id = ? 
+                    ORDER BY created_at DESC
+                    LIMIT 1`;
 
                 // Sample values; adjust them according to your application's needs
                 const values1 = [
@@ -174,7 +134,7 @@ export default async function handler(req, res) {
 
                         templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
                         dynamicTemplateData: {
-                            orderNumber: data[0][0].id,
+                            orderNumber: data,
                             name: req.body.name,
                             email: req.body.email,
                             phone: req.body.phone,
@@ -237,7 +197,7 @@ export default async function handler(req, res) {
 
 
 
-        insertCommande().then(sendEmails())
+        insertCommande().then((data) => sendEmails(data))
 
     } catch (error) {
         console.error('Error sending verification email:', error);
