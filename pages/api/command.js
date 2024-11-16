@@ -200,7 +200,7 @@ console.log('test',data1)
 
 
 
-        insertCommande().then((data) =>{ conosle.log('send emails function',data);
+        insertCommande().then((data) =>{ console.log('send emails function',data);
                                         sendEmails(data)})
 
     } catch (error) {
