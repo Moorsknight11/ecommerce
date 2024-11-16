@@ -114,7 +114,7 @@ return(results)
                     // Send success response with insert ID
 
                     return results;
-                }).then(data1 => {
+                }).then((data1) => {
 
                     console.log("thisdata",data1)
 
@@ -126,7 +126,7 @@ return(results)
                     };
 
 
-console.log('test')
+console.log('test',data1)
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
                     const msg = {
