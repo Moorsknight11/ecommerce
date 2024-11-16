@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
                     // Send success response with insert ID
           
-
+return(return(results) 
 
                 }).then(data => {
 
