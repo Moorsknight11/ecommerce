@@ -128,17 +128,17 @@ return(results)
 
 console.log('test',data1)
 
-                    function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, function (char) {
-        return {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#39;',
-        }[char];
-    });
-}
+                   // function escapeHTML(str) {
+   // return str.replace(/[&<>"']/g, function (char) {
+       // return {
+          //  '&': '&amp;',
+           // '<': '&lt;',
+          //  '>': '&gt;',
+          //  '"': '&quot;',
+          //  "'": '&#39;',
+      //  }[char];
+   // });
+//}
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
                     const msg = {
@@ -147,17 +147,7 @@ console.log('test',data1)
                         subject: 'Commande Commande',
 
                         templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
-                        dynamicTemplateData: {
-                            orderNumber: data1[0][0].id,
-                            name: escapeHTML(req.body.name),
-                            email: escapeHTML(req.body.email),
-                            phone: escapeHTML(req.body.phone),
-                            total_price: totalAmount,
-                            items: JSON.parse(req.body.commande),
-                            itemsString: escapeHTML(req.body.commande),
-                            productsNumber: JSON.parse(req.body.commande).length,
-                            address: escapeHTML(req.body.address)
-                        }, // Data to personalize the template
+
 
                     }
                     sgMail
