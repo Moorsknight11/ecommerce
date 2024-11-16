@@ -191,7 +191,7 @@ console.log('test',data1)
                             " details de la commande est: " + req.body.commande +
                             " et son telephone est: " + req.body.phone +
                             " et son addresse est: " + req.body.address +
-                            " et le numero de la commande est: " + data1[0][0].id
+                            " et le numero de la commande est: " + data1[0][0].id+
                                              " et la somme est: " + totalAmount
 
                     });
