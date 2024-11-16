@@ -154,6 +154,7 @@ console.log('test')
                             console.log('second Email sent')
                         })
                         .catch((error) => {
+                            console.log('error here')
                             console.log(error.response.body.errors)
                             console.error(error)
                         })
