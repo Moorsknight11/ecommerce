@@ -61,8 +61,8 @@ return(results)
 
                     sgMail
                         .send(msg)
-                        .then((data) => {
-                            console.log('first Email sent',data)
+                        .then(() => {
+                            console.log('first Email sent')
                         })
                         .catch((error) => {
                             console.log(error.response.body.errors)
@@ -127,6 +127,18 @@ return(results)
 
 
 console.log('test',data1)
+
+                    function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, function (char) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+        }[char];
+    });
+}
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
                     const msg = {
@@ -137,21 +149,21 @@ console.log('test',data1)
                         templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
                         dynamicTemplateData: {
                             orderNumber: data1[0][0].id,
-                            name: req.body.name,
-                            email: req.body.email,
-                            phone: req.body.phone,
+                            name: escapeHTML(req.body.name),
+                            email: escapeHTML(req.body.email),
+                            phone: escapeHTML(req.body.phone),
                             total_price: totalAmount,
                             items: JSON.parse(req.body.commande),
-                            itemsString: req.body.commande,
+                            itemsString: escapeHTML(req.body.commande),
                             productsNumber: JSON.parse(req.body.commande).length,
-                            address: req.body.address
+                            address: escapeHTML(req.body.address)
                         }, // Data to personalize the template
 
                     }
                     sgMail
                         .send(msg)
-                        .then((data) => {
-                            console.log('second Email sent',data)
+                        .then(() => {
+                            console.log('second Email sent')
                         })
                         .catch((error) => {
                             console.log('error here')
