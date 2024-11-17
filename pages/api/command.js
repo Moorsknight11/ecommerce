@@ -82,7 +82,7 @@ return(results)
 
 
 
-        async function sendEmails(data) {
+        function sendEmails(data) {
             console.log(data)
             try {
 
@@ -104,7 +104,7 @@ return(results)
 
 
 
-                await db.query(sql1, values1, (error, results) => {
+                db.query(sql1, values1, (error, results) => {
                     if (error) {
                         console.error("Database error:", error);
                         // Send error response if there's a database error
@@ -211,7 +211,7 @@ console.log('test',data1)
 
 
             console.log('Command executed successfully');
-            await res.status(200).json({ message: req.body.phone, email: req.body.email });
+             res.status(200).json({ message: req.body.phone, email: req.body.email });
         }
 
 
