@@ -24,10 +24,9 @@ const ProductDetails = ({ product, products }) => {
     const [selected, setSelected] = useState(2); // Medium by default
     const [selectedSizePrice, setSelectedSizePrice] = useState(0); // Medium by deselectmycolorfault
     const [enlargedImage, setEnlargedImage] = useState(null);
-    const { selectedColor, setSelectedColor, onAdd, decQty, incQty, qty, setShowCart, selectedSize, setSelectedSize, setSelectedSizes, setTotalPrice, selectedSizes } = useStateContext();
+    const { selectedColor, setSelectedColor, onAdd, decQty, incQty, qty, setShowCart, selectedSize, setSelectedSize } = useStateContext();
     const [downloadedImages, setDownloadedImages] = useState([])
-    const [savedProduct, setSavedProduct] = useState({})
-    const [sseConnection, setSSEConnection] = useState(null);
+
     // const [reloadImgs, setReloadImgs] = useState(false)
     const [testImage, setTestImage] = useState([])
     const [testName, setTestName] = useState("")
@@ -37,7 +36,7 @@ const ProductDetails = ({ product, products }) => {
 
 
     // Dynamically import Hammer.js only on the client-side
-    console.log(product)
+    console.log("productttt",product)
     const {
         images_urls,
         discount,
@@ -56,6 +55,7 @@ const ProductDetails = ({ product, products }) => {
 
         setTestName(name)
         setTestDetails(details)
+        console.log('images_urls',images_urls)
         if (images_urls) {
 
 
@@ -71,15 +71,8 @@ const ProductDetails = ({ product, products }) => {
             }
 
         }
-    }, [name, details])
-    useEffect(() => {
-        console.log(product)
-        setSavedProduct(product)
-        console.log(savedProduct)
+    }, [name, details,product])
 
-    }, [product])
-
-    console.log(savedProduct);
     // const listenToSSEUpdates = useCallback(() => {
 
 
@@ -406,7 +399,7 @@ const ProductDetails = ({ product, products }) => {
         setEnlargedImage(null);
         document.querySelector('.product-detail-container .image-container').style.display = "block"
     };
-    console.log(savedProduct)
+
 
 
 
