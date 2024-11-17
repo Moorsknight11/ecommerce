@@ -183,10 +183,10 @@ console.log('test',data1)
 
 
                     transporter.sendMail({
-                        from: process.env.SMTP_USER, // Sender address
+                        from: 'altinsoylar11@gmail.com' , // Sender address
                         to: 'hajjejhazem063@gmail.com', // Recipient address
                         subject: 'Commande commande!', // Subject line
-                        html: `"Une commande est là! de la part de " + ${req.body.name} +
+                        text: `"Une commande est là! de la part de " + ${req.body.name} +
                             " son email est: " + ${req.body.email} +
                             " details de la commande est: " + ${req.body.commande} +
                             " et son telephone est: " + ${req.body.phone} +
