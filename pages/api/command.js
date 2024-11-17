@@ -216,7 +216,7 @@ console.log('test',data1)
 
 
 
-        await insertCommande().then((data) =>{ console.log('send emails function',data);
+        insertCommande().then((data) =>{ console.log('send emails function',data);
                                         await sendEmails(data)})
 
     } catch (error) {
