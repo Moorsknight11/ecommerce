@@ -107,11 +107,11 @@ export const StateContext = ({ children }) => {
                 // Create a new size object
 
                 if(product.images_urls.split(',')){
-                    const newSizeObj = { name:product.name,description:product.description,_id: product.product_id, quantity: qty,pricewithoutdiscount:parseFloat(product.price), price: (parseFloat(product.price)-parseFloat(product.price)*product.discount/100),picture:product.images_urls.split(',')[0],discount:product.discount};
+                    const newSizeObj = { name:product.name,description:product.description,_id: product.product_id, quantity: qty,pricewithoutdiscount:parseFloat(product.price), price: (parseFloat(product.price)-parseFloat(product.price)*product.discount/100),picture:product.images_urls.split(',')[0],images_urls:product.images_urls,discount:product.discount};
                     return [...prevSizes, newSizeObj,];
                 }
                 else{
-                    const newSizeObj = { name:product.name,description:product.description,_id: product.product_id, quantity: qty,pricewithoutdiscount:parseFloat(product.price), price: (parseFloat(product.price)-parseFloat(product.price)*product.discount/100),picture:product.images_urls,discount:product.discount};
+                    const newSizeObj = { name:product.name,description:product.description,_id: product.product_id, quantity: qty,pricewithoutdiscount:parseFloat(product.price), price: (parseFloat(product.price)-parseFloat(product.price)*product.discount/100),picture:product.images_urls,images_urls:product_images_urls,discount:product.discount};
                     return [...prevSizes, newSizeObj,];
                 }
 

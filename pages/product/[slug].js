@@ -25,7 +25,7 @@ const ProductDetails = ({ product, products }) => {
     const [selectedSizePrice, setSelectedSizePrice] = useState(0); // Medium by deselectmycolorfault
     const [enlargedImage, setEnlargedImage] = useState(null);
     const { selectedColor, setSelectedColor, onAdd, decQty, incQty, qty, setShowCart, selectedSize, setSelectedSize, setSelectedSizes, setTotalPrice, selectedSizes } = useStateContext();
-
+    const [downloadedImages, setDownloadedImages] = useState([])
     const [savedProduct, setSavedProduct] = useState({})
     const [sseConnection, setSSEConnection] = useState(null);
     // const [reloadImgs, setReloadImgs] = useState(false)
@@ -40,9 +40,24 @@ const ProductDetails = ({ product, products }) => {
 
     const router = useRouter();
     const { slug } = router.query;
-    const { discount,price, prices, _type, colors, description,quantity_in_stock } = savedProduct ? product : "";
+    const { images_urls, discount, name, details, price, prices, _type, colors,description,quantity_in_stock } = savedProduct ? product : "";
     const pricewithdiscount = parseFloat(price)-parseFloat(price*discount/100)
+    useEffect(() => {
 
+        setTestName(name)
+        setTestDetails(details)
+        if(images_urls.split(',')){
+        setDownloadedImages(images_urls.split(','))
+        }
+        else{
+            let array1=[]
+            array1.push(images_urls)
+            setDownloadedImages(array1)
+
+        }
+
+
+    }, [name, details])
     useEffect(() => {
         console.log(product)
         setSavedProduct(product)
