@@ -216,7 +216,9 @@ console.log('test',data1)
 
 
 
-        insertCommande().then((data) =>{ console.log('send emails function',data);sendEmails(data);})
+        insertCommande().then((data) =>{ setTimeout(() => {
+            console.log('send emails function',data);sendEmails(data);
+        }, 20000);})
 
     } catch (error) {
         console.error('Error sending verification email:', error);
