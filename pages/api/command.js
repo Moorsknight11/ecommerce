@@ -27,8 +27,8 @@ export default async function handler(req, res) {
                     }
 
                     // Send success response with insert ID
-          
-return(results) 
+
+                    return (results)
 
                 }).then(data => {
 
@@ -82,7 +82,7 @@ return(results)
 
 
 
-       async function sendEmails(data) {
+        async function sendEmails(data) {
             console.log(data)
             try {
 
@@ -104,89 +104,86 @@ return(results)
 
 
 
-                await db.query(sql1, values1, (error, results) => {
-                    if (error) {
-                        console.error("Database error:", error);
-                        // Send error response if there's a database error
-                        return res.status(500).json({ success: false, message: 'Database error', error });
-                    }
+                const dbQuery = (sql, values) => {
+                    return new Promise((resolve, reject) => {
+                        db.query(sql, values, (error, results) => {
+                            if (error) reject(error);
+                            resolve(results);
+                        });
+                    });
+                };
+                const data1 = await dbQuery(sql1, values1);
+                console.log("thisdata", data1)
 
-                    // Send success response with insert ID
-
-                    return results;
-                }).then((data1) => {
-
-                    console.log("thisdata",data1)
-
-                    // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-                    const calculateTotalPrice = (products) => {
-                        return products.reduce((total, product) => {
-                            return total + (product.quantity * product.pricewithoutdiscount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
-                        }, 0);
-                    };
+                // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+                const calculateTotalPrice = (products) => {
+                    return products.reduce((total, product) => {
+                        return total + (product.quantity * product.pricewithoutdiscount - product.quantity * product.pricewithoutdiscount * product.discount / 100);
+                    }, 0);
+                };
 
 
-console.log('test',data1)
+                console.log('test', data1)
 
-                   // function escapeHTML(str) {
-   // return str.replace(/[&<>"']/g, function (char) {
-       // return {
-          //  '&': '&amp;',
-           // '<': '&lt;',
-          //  '>': '&gt;',
-          //  '"': '&quot;',
-          //  "'": '&#39;',
-      //  }[char];
-   // });
-//}
-                    const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
+                // function escapeHTML(str) {
+                // return str.replace(/[&<>"']/g, function (char) {
+                // return {
+                //  '&': '&amp;',
+                // '<': '&lt;',
+                //  '>': '&gt;',
+                //  '"': '&quot;',
+                //  "'": '&#39;',
+                //  }[char];
+                // });
+                //}
+                const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
-                    // const msg = {
-                    //     to: 'hajjejhazem063@gmail.com', // Change to your recipient
-                    //     from: "altinsoylar11@gmail.com", // Change to your verified sender
-                    //     subject: 'Commande Commande',
+                // const msg = {
+                //     to: 'hajjejhazem063@gmail.com', // Change to your recipient
+                //     from: "altinsoylar11@gmail.com", // Change to your verified sender
+                //     subject: 'Commande Commande',
 
-                    //     templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
+                //     templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
 
-                    //                             dynamicTemplateData: {
-                    //         orderNumber: data1[0][0].id,
-                    //                                       itemsString: req.body.commande,
-                    //         name: req.body.name,
-                    //         email: req.body.email,
-                    //         phone: req.body.phone,
-                    //         total_price: totalAmount,
-                    //         items: JSON.parse(req.body.commande),
-                      
-                    //         productsNumber: JSON.parse(req.body.commande).length,
-                    //         address: req.body.address
-                    //     }, // Data to personalize the template
+                //                             dynamicTemplateData: {
+                //         orderNumber: data1[0][0].id,
+                //                                       itemsString: req.body.commande,
+                //         name: req.body.name,
+                //         email: req.body.email,
+                //         phone: req.body.phone,
+                //         total_price: totalAmount,
+                //         items: JSON.parse(req.body.commande),
 
-
-                    // }
-                    // sgMail
-                    //     .send(msg)
-                    //     .then(() => {
-                    //         console.log('second Email sent')
-                    //     })
-                    //     .catch((error) => {
-                    //         console.log('error here')
-                    //         console.log(error.response.body.errors)
-                    //         console.error(error)
-                    //     })
-
-                    //     html: `<strong> Une commande est là! de la part de  ${req.body.name} +
-                    //     son email est:  ${req.body.email} 
-                    //    details de la commande est:   ${req.body.commande} 
-                    //     et son telephone est:   ${req.body.phone} 
-                    //    et son addresse est:  ${req.body.address} 
-                    //     et le numero de la commande est:  ${data[0][0].id},</strong>`,
+                //         productsNumber: JSON.parse(req.body.commande).length,
+                //         address: req.body.address
+                //     }, // Data to personalize the template
 
 
-                    transporter.sendMail({
-                        from: 'altinsoylar11@gmail.com' , // Sender address
-                        to: 'hajjejhazem063@gmail.com', // Recipient address
-                        subject: 'Commande commande!', // Subject line
-                        text: `"Une commande est là! de la part de " + ${req.body.name} +
+                // }
+                // sgMail
+                //     .send(msg)
+                //     .then(() => {
+                //         console.log('second Email sent')
+                //     })
+                //     .catch((error) => {
+                //         console.log('error here')
+                //         console.log(error.response.body.errors)
+                //         console.error(error)
+                //     })
+
+                //     html: `<strong> Une commande est là! de la part de  ${req.body.name} +
+                //     son email est:  ${req.body.email} 
+                //    details de la commande est:   ${req.body.commande} 
+                //     et son telephone est:   ${req.body.phone} 
+                //    et son addresse est:  ${req.body.address} 
+                //     et le numero de la commande est:  ${data[0][0].id},</strong>`,
+
+
+                transporter.sendMail({
+                    from: 'altinsoylar11@gmail.com', // Sender address
+                    to: 'hajjejhazem063@gmail.com', // Recipient address
+                    subject: 'Commande commande!', // Subject line
+                    text: `"Une commande est là! de la part de " + ${req.body.name} +
                             " son email est: " + ${req.body.email} +
                             " details de la commande est: " + ${req.body.commande} +
                             " et son telephone est: " + ${req.body.phone} +
@@ -194,9 +191,9 @@ console.log('test',data1)
                             " et le numero de la commande est: " + ${data1[0][0].id} +
                                              " et la somme est: " + ${totalAmount} `
 
-                    });
-                    console.log("second email sent.");
-                })
+                });
+                console.log("second email sent.");
+
 
 
 
@@ -216,9 +213,11 @@ console.log('test',data1)
 
 
 
-        insertCommande().then((data) =>{ setTimeout(() => {
-            console.log('send emails function',data);sendEmails(data);
-        }, 5000);})
+        insertCommande().then((data) => {
+            setTimeout(() => {
+                console.log('send emails function', data); sendEmails(data);
+            }, 5000);
+        })
 
     } catch (error) {
         console.error('Error sending verification email:', error);
