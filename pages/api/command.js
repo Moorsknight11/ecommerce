@@ -215,13 +215,14 @@ export default async function handler(req, res) {
         }
 
 
+        let test;
+        await insertCommande().then((data) => {
+            test = data
 
-        insertCommande().then((data) => {
-            setTimeout(() => {
-                console.log('send emails function', data); sendEmails(data);
-            }, 5000);
+
         })
 
+        await sendEmails(test)
     } catch (error) {
         console.error('Error sending verification email:', error);
         throw new Error('Failed to send verification email');
