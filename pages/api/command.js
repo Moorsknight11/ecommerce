@@ -219,9 +219,9 @@ export default async function handler(req, res) {
         await insertCommande().then((data) => {
             test = data
 
-
+            console.log(test)
         })
-
+        console.log(test)
         await sendEmails(test)
     } catch (error) {
         console.error('Error sending verification email:', error);
