@@ -37,9 +37,7 @@ const ProductDetails = ({ product, products }) => {
 
 
     // Dynamically import Hammer.js only on the client-side
-    if (!product) {
-        return
-    }
+console.log(product)
     const { images_urls, discount, name, details, price, prices, _type, colors, description, quantity_in_stock } = product;
 
     const pricewithdiscount = parseFloat(price) - parseFloat(price * discount / 100)
