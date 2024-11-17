@@ -130,14 +130,26 @@ console.log(form)
 
       if (response.ok) {
         // If the deletion was successful, update the local state
-        const updatedImages = form.imagesUrls.split(',')
+        if(form.imagesUrls.split(',')){
+
+          const updatedImages = form.imagesUrls.split(',')
           .filter(image => image.trim() !== imageToDelete.trim())
           .join(',');
+
+        
+      
 
         setForm({
           ...form,
           imagesUrls: updatedImages // Update the state with the new string
         });
+      }else{
+        const updatedImages = form.imagesUrls
+      setForm({
+        ...form,
+        imagesUrls: updatedImages // Update the state with the new string
+      });
+      }
       } else {
         console.error('Failed to delete the image from the database.');
       }

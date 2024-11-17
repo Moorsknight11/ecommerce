@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         // Update the images_urls column in the product table
         let updatedImageUrls
         const product = await db.execute('SELECT images_urls FROM product WHERE product_id = ?', [productIdTrue]);
-        if (product.images_urls.split(',')) {
+        if (product[0][0].images_urls.split(',')) {
 
           updatedImageUrls = product[0][0]?.images_urls.split(',').filter(imageUrl => imageUrl.trim() !== id.trim()).join(',');
           console.log("product", product)

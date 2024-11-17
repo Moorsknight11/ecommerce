@@ -155,7 +155,7 @@ export default async function handler(req, res) {
                             email: req.body.email,
                             phone: req.body.phone,
                             total_price: totalAmount,
-                            items: JSON.parse(req.body.commande),
+        
 
                             productsNumber: JSON.parse(req.body.commande).length,
                             address: req.body.address
