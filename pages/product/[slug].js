@@ -56,17 +56,21 @@ const ProductDetails = ({ product, products }) => {
 
         setTestName(name)
         setTestDetails(details)
-        if (images_urls.split(',')) {
-            setDownloadedImages(images_urls.split(','))
-        }
-        else {
-            let array1 = []
-            array1.push(images_urls)
-            setDownloadedImages(array1)
+        if (images_urls) {
+
+
+            if (images_urls.split(',')) {
+                setDownloadedImages(images_urls.split(','))
+            }
+
+            else {
+                let array1 = []
+                array1.push(images_urls)
+                setDownloadedImages(array1)
+
+            }
 
         }
-
-
     }, [name, details])
     useEffect(() => {
         console.log(product)
