@@ -214,9 +214,8 @@ export default async function handler(req, res) {
 
 
         insertCommande().then((data) => {
-            setTimeout(() => {
-                console.log('send emails function', data); sendEmails(data);
-            }, 5000);
+
+            console.log('send emails function', data); sendEmails(data);
         })
 
     } catch (error) {
