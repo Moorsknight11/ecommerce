@@ -141,38 +141,38 @@ export default async function handler(req, res) {
                     //}
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
-                    // const msg = {
-                    //     to: 'hajjejhazem063@gmail.com', // Change to your recipient
-                    //     from: "altinsoylar11@gmail.com", // Change to your verified sender
-                    //     subject: 'Commande Commande',
+                    const msg = {
+                        to: 'hajjejhazem063@gmail.com', // Change to your recipient
+                        from: "altinsoylar11@gmail.com", // Change to your verified sender
+                        subject: 'Commande Commande',
 
-                    //     templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
+                        templateId: 'd-6ffe44e8d43343a3b86802112b1f456d',
 
-                    //                             dynamicTemplateData: {
-                    //         orderNumber: data1[0][0].id,
-                    //                                       itemsString: req.body.commande,
-                    //         name: req.body.name,
-                    //         email: req.body.email,
-                    //         phone: req.body.phone,
-                    //         total_price: totalAmount,
-                    //         items: JSON.parse(req.body.commande),
+                        dynamicTemplateData: {
+                            orderNumber: data1[0][0].id,
+                            itemsString: req.body.commande,
+                            name: req.body.name,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            total_price: totalAmount,
+                            items: JSON.parse(req.body.commande),
 
-                    //         productsNumber: JSON.parse(req.body.commande).length,
-                    //         address: req.body.address
-                    //     }, // Data to personalize the template
+                            productsNumber: JSON.parse(req.body.commande).length,
+                            address: req.body.address
+                        }, // Data to personalize the template
 
 
-                    // }
-                    // sgMail
-                    //     .send(msg)
-                    //     .then(() => {
-                    //         console.log('second Email sent')
-                    //     })
-                    //     .catch((error) => {
-                    //         console.log('error here')
-                    //         console.log(error.response.body.errors)
-                    //         console.error(error)
-                    //     })
+                    }
+                    sgMail
+                        .send(msg)
+                        .then(() => {
+                            console.log('second Email sent')
+                        })
+                        .catch((error) => {
+                            console.log('error here')
+                            console.log(error.response.body.errors)
+                            console.error(error)
+                        })
 
                     //     html: `<strong> Une commande est là! de la part de  ${req.body.name} +
                     //     son email est:  ${req.body.email} 
@@ -182,20 +182,20 @@ export default async function handler(req, res) {
                     //     et le numero de la commande est:  ${data[0][0].id},</strong>`,
 
 
-                    transporter.sendMail({
-                        from: 'altinsoylar11@gmail.com', // Sender address
-                        to: 'hajjejhazem063@gmail.com', // Recipient address
-                        subject: 'Commande commande!', // Subject line
-                        text: `"Une commande est là! de la part de " + ${req.body.name} +
-                            " son email est: " + ${req.body.email} +
-                            " details de la commande est: " + ${req.body.commande} +
-                            " et son telephone est: " + ${req.body.phone} +
-                            " et son addresse est: " + ${req.body.address} +
-                            " et le numero de la commande est: " + ${data1[0][0].id} +
-                                             " et la somme est: " + ${totalAmount} `
+                    // transporter.sendMail({
+                    //     from: 'altinsoylar11@gmail.com', // Sender address
+                    //     to: 'hajjejhazem063@gmail.com', // Recipient address
+                    //     subject: 'Commande commande!', // Subject line
+                    //     text: `"Une commande est là! de la part de " + ${req.body.name} +
+                    //         " son email est: " + ${req.body.email} +
+                    //         " details de la commande est: " + ${req.body.commande} +
+                    //         " et son telephone est: " + ${req.body.phone} +
+                    //         " et son addresse est: " + ${req.body.address} +
+                    //         " et le numero de la commande est: " + ${data1[0][0].id} +
+                    //                          " et la somme est: " + ${totalAmount} `
 
-                    });
-                    console.log("second email sent.");
+                    // });
+                    // console.log("second email sent.");
                 })
 
 
