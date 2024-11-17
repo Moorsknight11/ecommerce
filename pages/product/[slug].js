@@ -21,7 +21,7 @@ const ProductDetails = ({ product, products }) => {
     const [imageOfIndex, setImageOfIndex] = useState(false);
     const [index, setIndex] = useState(0);
     const [indexColors, setIndexColors] = useState(0);
-    const [selected, setSelected] = useState(2); // Medium by default
+    const [selected, setSelected] = useState(0); // Medium by default
     const [selectedSizePrice, setSelectedSizePrice] = useState(0); // Medium by deselectmycolorfault
     const [enlargedImage, setEnlargedImage] = useState(null);
     const { selectedColor, setSelectedColor, onAdd, decQty, incQty, qty, setShowCart, selectedSize, setSelectedSize } = useStateContext();
@@ -36,7 +36,7 @@ const ProductDetails = ({ product, products }) => {
 
 
     // Dynamically import Hammer.js only on the client-side
-    console.log("productttt",product)
+    console.log("productttt", product)
     const {
         images_urls,
         discount,
@@ -55,7 +55,7 @@ const ProductDetails = ({ product, products }) => {
 
         setTestName(name)
         setTestDetails(details)
-        console.log('images_urls',images_urls)
+        console.log('images_urls', images_urls)
         if (images_urls) {
 
 
@@ -71,152 +71,8 @@ const ProductDetails = ({ product, products }) => {
             }
 
         }
-    }, [name, details,product])
+    }, [name, details, product])
 
-    // const listenToSSEUpdates = useCallback(() => {
-
-
-    //     const eventSource = new EventSource('/api/productHandler/');
-    //     console.log(eventSource)
-
-    //     setSSEConnection(eventSource)
-
-    //     eventSource.onmessage = (event) => {
-    //         console.log(slug)
-    //         console.log(event.data)
-    //         // Handle the received message here
-    //         // Assuming event.data is your object and products and setProducts are your state variable and setter function respectively
-    //         // let jsonString = event.data.trim(); // Remove leading and trailing whitespace, including \n\n
-    //         // Parse the JSON string
-    //         let update = JSON.parse(event.data);
-    //         // Check if the slug is equal to the _type
-    //         if (update) {
-    //             if (slug === update.slug.current) {
-
-    //                 if (savedProduct._updatedAt === update._updatedAt) {
-    //                     router.push('/category/');
-    //                 }
-    //                 else {
-
-
-
-    //                     setSavedProduct(update)
-    //                     console.log(update._id)
-    //                     // Find the index of the product in the products array with id equal to _id
-
-    //                     // If found, check if updatedAt differs
-    //                     setIndex(0)
-    //                     setImageOfIndex(false)
-    //                     setTestName(update.name)
-    //                     setTestDetails(update.details)
-    //                     setTestImage([])
-    //                     setTestImage(prevTestImage => {
-    //                         // Clear the previous state and replace it with the new image array
-    //                         return [...update.images_urls.split(',')];
-    //                     });
-    //                     console.log("Deleted existing product with same updatedAt:");
-
-    //                     // Add the new product into the array
-
-    //                 }
-    //             } else {
-    //                 console.log("Slug is not equal to _type");
-    //             }
-    //         }
-
-    //     }
-    //     eventSource.onerror = (error) => {
-    //         console.error('SSE connection error:', error);
-    //         // Handle the SSE connection error here
-    //     };
-
-    //     eventSource.onopen = () => {
-    //         console.log('SSE connection established.', eventSource);
-    //         // Optional: Perform actions when the SSE connection is established
-    //     };
-    //     eventSource.onclose = () => {
-    //         console.log('SSE connection closed.');
-    //         // Optional: Perform actions when the SSE connection is closed
-    //     }
-
-    //     // Clean up the EventSource when the component unmounts
-    //     return () => {
-    //         eventSource.close();
-    //     };
-
-
-
-
-
-
-    // }, []);
-
-
-
-
-
-
-
-
-
-    // useEffect(() => {
-
-    //     // fetchProductsByCategory(slug)
-
-    //     listenToSSEUpdates();
-
-    //     return () => {
-
-    //         if (sseConnection) {
-
-    //             sseConnection.close();
-
-    //         }
-
-    //     };
-
-    // }, [listenToSSEUpdates]);
-
-
-
-
-    // useEffect(() => {
-
-    //     const handleBeforeUnload = () => {
-
-    //         console.dir(sseConnection);
-
-    //         if (sseConnection) {
-
-    //             console.info('Closing SSE connection before unloading the page.');
-
-    //             sseConnection.close();
-
-    //         }
-
-    //     };
-
-    //     window.addEventListener('beforeunload', handleBeforeUnload);
-
-    //     // Clean up the event listener when the component is unmounted
-
-    //     return () => {
-
-    //         window.removeEventListener('beforeunload', handleBeforeUnload);
-
-    //     };
-
-    // }, [sseConnection]);
-
-    // // const fetchProductsByCategory = async (categorySlug) => {
-    // //     try {
-    // //         const productsQuery = `*[_type == "${categorySlug}"]`;
-    // //         const products = await client.fetch(productsQuery);
-    // //         setProducts(products);
-    // //     } catch (error) {
-    // //         console.error('Error fetching products:', error);
-    // //     }
-    // // };
 
 
     useEffect(() => {
@@ -270,27 +126,50 @@ const ProductDetails = ({ product, products }) => {
 
     const handleSlide = (direction) => {
         if (direction === 'next') {
+            console.log('click next')
             if (index < downloadedImages.length - 1) {
                 setIndex(index + 1);
                 setEnlargedImage(downloadedImages[index + 1]);
             }
+            else{
+                setIndex(0);
+                setEnlargedImage(downloadedImages[0]);
+            }
         } else if (direction === 'prev') {
+            console.log('click prev')
+
             if (index > 0) {
                 setIndex(index - 1);
                 setEnlargedImage(downloadedImages[index - 1]);
+            }
+            else{
+                setIndex(downloadedImages.length-1);
+                setEnlargedImage(downloadedImages[downloadedImages.length-1 ]);
             }
         }
     };
     const handleSlideMain = (direction) => {
         if (direction === 'next') {
+            console.log('click next')
+
             if (index < downloadedImages.length - 1) {
                 setIndex(index + 1);
-
+                setSelected(index + 1)
+            }
+            else{
+                setIndex(0);
+                setSelected(0)
             }
         } else if (direction === 'prev') {
+            console.log('click prev')
+
             if (index > 0) {
                 setIndex(index - 1);
-
+                setSelected(index - 1)
+            }
+            else{
+                setIndex(downloadedImages.length-1);
+                setSelected(downloadedImages.length - 1)
             }
         }
     };
@@ -445,8 +324,8 @@ const ProductDetails = ({ product, products }) => {
                         )}
                         <div className="image-container swipe-container">
 
-                            {!imageOfIndex && <div style={{ position: 'relative' }}><img onClick={() => handleImageClick(downloadedImages && downloadedImages[index])}
-                                src={downloadedImages[0]}
+                            {!imageOfIndex && <div style={{ position: 'relative' }}><img onClick={() => handleImageClick(downloadedImages[selected])}
+                                src={downloadedImages[selected]}
                                 alt="product"
                                 className="product-detail-image swipe-item"
 
@@ -456,7 +335,7 @@ const ProductDetails = ({ product, products }) => {
                             </div>
                             }
 
-                            {imageOfIndex && <img src={downloadedImages[0]} alt="product" className="product-detail-image" />}
+                            {imageOfIndex && <img src={downloadedImages[selected]} alt="product" className="product-detail-image" />}
                         </div>
                         <div className="small-images-container">
                             {
