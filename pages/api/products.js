@@ -30,37 +30,23 @@ const productsHandler = async (req, res) => {
             }
             // console.log('Files received:', files);
             // Extract fields and files
-            const { name, description, category_id, parent_category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active } = fields;
+            let { name, description, category_id, parent_category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active } = fields;
             let imageUrls
+            if (is_featured === true) { is_featured = 1 }
+
+            else {
+                is_featured = 0
+            }
+            if (is_active === true) { is_active = 1 }
+
+            else {
+                is_active = 0
+            }
 
             // Process images
             try {
                 console.log(files)
-                // if (files.images) {
-                //     const images = Array.isArray(files.images) ? files.images : [files.images];
-                //     for (const image of images) {
-                //         const tempPath = image.filepath;
-                //         const newFilename = `${image.newFilename}.${image.mimetype.split('/')[1]}`;
-                //         const targetPath = path.join(form.uploadDir, newFilename);
-                //         imageUrls.push(`/uploads/${newFilename}`);
-
-                //         // Move file to the desired location
-                //         fs.renameSync(tempPath, targetPath); // Synchronous to handle errors directly
-                //         try {
-                //             console.log('Moving file from', tempPath, 'to', targetPath);
-                //             fs.renameSync(tempPath, targetPath); // This will throw an error if the tempPath is invalid
-
-                //             console.log(imageUrls)
-
-                //         } catch (error) {
-                //             console.error('Error moving file:', error);
-                //         }
-                //         // Store the URL of the uploaded image
-
-                //     }
-
-
-                // }
+               
                 const file = files.images
                 async function uploadFiles(files) {
                     const uploadPromises = files.map(file =>
@@ -84,7 +70,7 @@ const productsHandler = async (req, res) => {
 
                     const result = await db.query(
                         'INSERT INTO product (name,description,category_id,parent_category_id,brand_id,sku,price,discount,quantity_in_stock,weight,dimensions,color,size,material,is_featured,is_active,images_urls) VALUES (?,?,?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?, ?, ? )',
-                        [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active, imageUrlsString]
+                        [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, parseInt(is_featured), parseInt(is_active), imageUrlsString]
                     );
 
                     console.log(result)

@@ -43,52 +43,7 @@ export default async function handler(req, res) {
             // Process images
             try {
                 console.log(files)
-                // if (files.images) {
-                //     const images = Array.isArray(files.images) ? files.images : [files.images];
-                //     for (const image of images) {
-                //         const tempPath = image.filepath;
-                //         const newFilename = `${image.newFilename}.${image.mimetype.split('/')[1]}`;
-                //         const targetPath = path.join(form.uploadDir, newFilename);
-                //         imageUrls.push(`/uploads/${newFilename}`);
-
-                //         // Move file to the desired location
-                //         fs.renameSync(tempPath, targetPath); // Synchronous to handle errors directly
-                //         try {
-                //             console.log('Moving file from', tempPath, 'to', targetPath);
-                //             fs.renameSync(tempPath, targetPath); // This will throw an error if the tempPath is invalid
-                //             console.log(imageUrls)
-                //         } catch (error) {
-                //             console.error('Error moving file:', error);
-                //         }
-                //         // Store the URL of the uploaded image
-
-                //     }
-
-
-                // }
-
-                // const imageUrlsString = imageUrls.join(','); // Join URLs if storing multiple
-
-                // const result = await db.query(
-                //     'INSERT INTO product (name,description,category_id,parent_category_id,brand_id,sku,price,discount,quantity_in_stock,weight,dimensions,color,size,material,is_featured,is_active,images_urls) VALUES (?,?,?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?, ?, ? )',
-                //     [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, is_featured, is_active, imageUrlsString]
-                // );
-
-                // console.log(result)
-                // const imageUrlsdb = imageUrlsString.split(',').map(url => url.trim());
-                // const insertedId = result[0].insertId
-                // console.log(insertedId)
-                // for (const imageUrl of imageUrlsdb) {
-                //     await db.execute('INSERT INTO images (product_id, image_url) VALUES (?, ?)', [insertedId, imageUrl]);
-                //     console.log("test")
-                // }
-                // return res.status(200).json({ message: 'Product added successfully!', productId: insertedId });
-                // // Save product data in the database
-
-
-
-
-
+             
                 const file = files.images
                 async function uploadFiles(files) {
                     const uploadPromises = files?.map(file =>
@@ -150,8 +105,8 @@ export default async function handler(req, res) {
                              WHERE 
                                  product_id = ?`,
                         [
-                            is_active,
-                            is_featured,
+                            parseInt(is_active),
+                            parseInt(is_featured),
                             material,
                             dimensions,
                             size,

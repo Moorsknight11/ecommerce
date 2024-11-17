@@ -50,7 +50,7 @@ function Cart() {
                   <h5>
                     {item.name} {item.size}
                   </h5>
-                  <div style={{display:"flex",gap:"15px"}}> <h5 style={{textDecoration:"line-through",textDecorationColor:"red"}}> $ {item.pricewithoutdiscount}</h5> <h5> $ {item.price}</h5></div>
+                  <div style={{display:"flex",gap:"15px"}}> <h5 style={{textDecoration:"line-through",textDecorationColor:"red"}}> TND {item.pricewithoutdiscount}</h5> <h5> TND {item.price}</h5></div>
 
                 </div>
                 <div className="flex bottom">
@@ -100,7 +100,7 @@ function Cart() {
                 Subtotal:
               </h3>
               <h3>
-                $ {totalPrice}
+                TND {totalPrice}
               </h3>
 
             </div>

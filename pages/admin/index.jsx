@@ -117,8 +117,8 @@ const AddProductForm = () => {
           color: '',
           size: '',
           material: '',
-          is_featured: false,
-          is_active: true,
+          is_featured: 0,
+          is_active: 1,
           images: []
         });
       } else {
