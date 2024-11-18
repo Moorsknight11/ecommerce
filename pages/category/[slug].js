@@ -18,7 +18,10 @@ const CategoryProducts = ({ subcategories }) => {
     console.log(subproducts)
    
     return (
-        <Layout >
+        <Layout title="Turquie Commerce Store"
+        description="Welcome to the Turquie Commerce Store! Find amazing deals on products."
+        keywords="home, e-commerce, Turquie, Tunisie, trade"
+        imageUrl="/anyjpg">
             <FilterButtons />
             <Filtresmobile />
             <div style={{ display: "flex", justifyContent: "start", alignItems: "start" }}>

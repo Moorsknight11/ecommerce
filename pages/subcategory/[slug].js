@@ -17,7 +17,9 @@ const SubCategoryProducts = ({ subproducts }) => {
         <Layout title="Home - Turquie Commerce Store"
             description="Welcome to the Turquie Commerce Store! Find amazing deals on products."
             keywords="home, e-commerce, Turquie, Tunisie, trade"
-            imageUrl="/home-og-image.jpg">
+            imageUrl="/home-og-image.jpg"
+            
+            >
             <div className="products-container">
                 {products?.map((item) => (
                     <Product key={item.product_id} product={item} />
