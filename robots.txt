@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ecommerce-3y28.vercel.app/sitemap.xml

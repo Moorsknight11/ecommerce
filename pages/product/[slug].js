@@ -1,15 +1,14 @@
 "use client";
 import React, { useState, useEffect, useCallback, } from 'react'
 import { useStateContext } from '../../context/StateContext';
-// import {Toaster} from 'react-hot-toast';
-// import "../../src/app/globals.css";
-import Layout from '../../src/app/components/Layout'; // Import the Layout component
+
+import Layout from '../../src/app/components/Layout'; 
 import { AiOutlineMinus, AiOutlineplus, AiFillStar, AiOutlineStar, AiOutlinePlus } from 'react-icons/ai';
 import Product from '../../src/app/components/Product';
-// import ComfortIndicator from '../../src/app/components/ComfortIndicator';
+
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useSwipeable } from 'react-swipeable';
-import { useRouter } from 'next/router';
+
 import db from '../../lib/db';
 const ProductDetails = ({ product, products }) => {
     // if (!product) {
@@ -298,7 +297,10 @@ const ProductDetails = ({ product, products }) => {
     // console.log(qty); // Now it should log the value
     return (
 
-        <Layout> {/* Wrap your page content with the Layout component */}
+        <Layout title={product.name+" Turquie Commerce Store"}
+        description="Welcome to the Turquie Commerce Store! Find amazing deals on products."
+        keywords="home, e-commerce, Turquie, Tunisie, trade"
+        imageUrl={product.images_urls.split(',')?product.images_urls.split(',')[0]:product.images_urls}> {/* Wrap your page content with the Layout component */}
 
 
             <div>

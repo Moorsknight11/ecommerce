@@ -6,8 +6,42 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import toast from 'react-hot-toast';
 import { useStateContext } from '../../../context/StateContext';
 import CustomerFormModal from './CustomerFormModal';
+import {Viewport} from 'next'
+export async function generateMetadata({ params }) {
+  // Fetch product details
+
+  return {
+    title: `${params.name} - Buy Now, Turquie commerce Store`,
+    description: `Get the best deal on ${params.name}. Available now.`,
+    keywords: params.name+",commerce,e-commerce,trade,drop-shipping,dropshipping,tunisie,turquie,café,chauffe eau élélctrique, produits divers,quincaillerie,electroménager",
+    openGraph: {
+      title: `${params.name} - Buy Now`,
+      description: `Check out ${params.name}, available at the best price.`,
+      images: [
+        {
+          url: params.imageUrl,
+          width: 800,
+          height: 600,
+          alt: `${params.name} Image`,
+        },
+
+      ],
+      type: 'website',
+    },
+  };
+}
+export function generateViewport(){
+  return {
+    themeColor: 'black', 
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  }
+}
 
 function Cart() {
+  
   const [selectedFinal, setselectedFinal] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
 

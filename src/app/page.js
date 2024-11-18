@@ -1,30 +1,13 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Category } from './components'
-import Filtres from './components/Filtres';
+
 
 
 const Home = () => {
 
   const [categories, setCategories] = useState([]);
-  const [slug, setSlug] = useState("")
-  const categoriesList = [
-    'Aspiratör',
-    'Ankastre Set',
-    'Ocak',
-    'Buzdolabı',
-    'Fırın',
-    'Davlumbaz',
-    'Çamaşır Makinesi',
-    'Bulaşık Makinesi',
-    'Su Sebili',
-    'Mikrodalga Fırın',
-    'Mini&Midi Fırın',
-    'Derin Dondurucu',
-    'Kurutma Makinesi',
-    'DAHA FAZLA GÖSTER'
-  ];
- 
+
   useEffect(() => {
 
 
@@ -66,7 +49,7 @@ const Home = () => {
             <div className="products-container">
 
               {categories?.map((category) => (
-                <Category key={category._id} category={category} />
+                <Category key={category.category_id} category={category} />
 
 
 
