@@ -43,8 +43,12 @@ const productsHandler = async (req, res) => {
                 is_active = 0
             }
 if(!parent_category_id){
-                        parent_category_id=1000
-                    }
+                        parent_category_id=100
+   } 
+                if(!category_id){
+                        category_id=100
+               }
+            
             // Process images
             try {
                 console.log(files)
