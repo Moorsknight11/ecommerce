@@ -49,7 +49,6 @@ const productsHandler = async (req, res) => {
                 category_id=NULL
             }
 
-
             // Process images
             try {
                 console.log(files)
@@ -67,14 +66,9 @@ const productsHandler = async (req, res) => {
                     const results = await Promise.all(uploadPromises);
                     const urls = results.map(result => result.secure_url);
                     imageUrls = urls
-                    console.log(urls)
-                        ; // Each result will contain Cloudinary response data for each upload
-
-
-                    ; // Adjust this based on your input name
+                    console.log(urls); // Each result will contain Cloudinary response data for each upload
 
                     const imageUrlsString = imageUrls.join(','); // Join URLs if storing multiple
-               
                     const result = await db.query(
                         'INSERT INTO product (name,description,category_id,parent_category_id,brand_id,sku,price,discount,quantity_in_stock,weight,dimensions,color,size,material,is_featured,is_active,images_urls) VALUES (?,?,?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?, ?, ? )',
                         [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, parseInt(is_featured), parseInt(is_active), imageUrlsString]
