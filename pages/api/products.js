@@ -42,7 +42,9 @@ const productsHandler = async (req, res) => {
             else {
                 is_active = 0
             }
-
+if(!parent_category_id){
+                        parent_category_id=1000
+                    }
             // Process images
             try {
                 console.log(files)
@@ -67,9 +69,7 @@ const productsHandler = async (req, res) => {
                     ; // Adjust this based on your input name
 
                     const imageUrlsString = imageUrls.join(','); // Join URLs if storing multiple
-                    if(!parent_category_id){
-                        parent_category_id=1000
-                    }
+                    
                     const result = await db.query(
                         'INSERT INTO product (name,description,category_id,parent_category_id,brand_id,sku,price,discount,quantity_in_stock,weight,dimensions,color,size,material,is_featured,is_active,images_urls) VALUES (?,?,?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?, ?, ? )',
                         [name, description, parent_category_id, category_id, brand_id, sku, price, discount, quantity_in_stock, weight, dimensions, color, size, material, parseInt(is_featured), parseInt(is_active), imageUrlsString]
