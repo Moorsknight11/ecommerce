@@ -195,6 +195,11 @@ span.text-red {
 
 }
 
+.product-card p:nth-child(2) {
+
+
+font-size: 12px;
+}
 .product-card p {
   text-align: center;
 
@@ -774,8 +779,12 @@ div.flex-top{
 
 .product-detail-desc p {
   margin-top: 10px;
-}
 
+}
+.product-detail-desc h1 {
+ font-size:12px;
+
+}
 .reviews p {
   color: #324d67;
   margin-top: 0px;
@@ -783,7 +792,7 @@ div.flex-top{
 
 .product-detail-desc .price {
   font-weight: 700;
-  font-size: 26px;
+  font-size: 12px;
   margin-top: 30px;
   color: #f02d34;
 }
@@ -805,6 +814,14 @@ div.flex-top{
 .product-detail-desc .buttons {
   display: flex;
   gap: 30px;
+}
+.product-detail-desc .description {
+  font-size:14px;
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Ensures breaking works in modern browsers */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  white-space: normal; 
+
 }
 
 .buttons .add-to-cart {

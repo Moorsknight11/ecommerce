@@ -128,17 +128,7 @@ export default async function handler(req, res) {
 
                     console.log('test', data1)
 
-                    // function escapeHTML(str) {
-                    // return str.replace(/[&<>"']/g, function (char) {
-                    // return {
-                    //  '&': '&amp;',
-                    // '<': '&lt;',
-                    //  '>': '&gt;',
-                    //  '"': '&quot;',
-                    //  "'": '&#39;',
-                    //  }[char];
-                    // });
-                    //}
+    
                     const totalAmount = calculateTotalPrice(JSON.parse(req.body.commande));
 
                     const msg = {
@@ -174,28 +164,7 @@ export default async function handler(req, res) {
                             console.error(error)
                         })
 
-                    //     html: `<strong> Une commande est là! de la part de  ${req.body.name} +
-                    //     son email est:  ${req.body.email} 
-                    //    details de la commande est:   ${req.body.commande} 
-                    //     et son telephone est:   ${req.body.phone} 
-                    //    et son addresse est:  ${req.body.address} 
-                    //     et le numero de la commande est:  ${data[0][0].id},</strong>`,
-
-
-                    // transporter.sendMail({
-                    //     from: 'altinsoylar11@gmail.com', // Sender address
-                    //     to: 'hajjejhazem063@gmail.com', // Recipient address
-                    //     subject: 'Commande commande!', // Subject line
-                    //     text: `"Une commande est là! de la part de " + ${req.body.name} +
-                    //         " son email est: " + ${req.body.email} +
-                    //         " details de la commande est: " + ${req.body.commande} +
-                    //         " et son telephone est: " + ${req.body.phone} +
-                    //         " et son addresse est: " + ${req.body.address} +
-                    //         " et le numero de la commande est: " + ${data1[0][0].id} +
-                    //                          " et la somme est: " + ${totalAmount} `
-
-                    // });
-                    // console.log("second email sent.");
+                   
                 })
 
 
