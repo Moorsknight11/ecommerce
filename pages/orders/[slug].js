@@ -1,6 +1,7 @@
+"use client";
 import React, { useEffect, useState } from 'react'
 
-const vieworder = () => {
+const Vieworder = () => {
 
     const [router, setRouter] = useState("")
     const [id, setId] = useState("")
@@ -46,4 +47,4 @@ const vieworder = () => {
     )
 }
 
-export default vieworder
+export default Vieworder
