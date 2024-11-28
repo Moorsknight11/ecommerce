@@ -17,6 +17,12 @@ body,
 
 }
 
+div.small-images-container {
+
+  overflow-x: scroll!important;
+  max-width: 70vw!important;
+}
+
 .brandsFlex {
   display: flex;
   align-items: center;
@@ -198,8 +204,9 @@ span.text-red {
 .product-card p:nth-child(2) {
 
 
-font-size: 12px;
+  font-size: 12px;
 }
+
 .product-card p {
   text-align: center;
 
@@ -514,12 +521,14 @@ font-size: 12px;
   transition: all 1s ease-in-out;
 
 }
-div.flex-top{
-  display:flex;
+
+div.flex-top {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .cart-container {
   height: 100vh;
   width: 600px;
@@ -781,10 +790,12 @@ div.flex-top{
   margin-top: 10px;
 
 }
+
 .product-detail-desc h1 {
- font-size:12px;
+  font-size: 12px;
 
 }
+
 .reviews p {
   color: #324d67;
   margin-top: 0px;
@@ -815,12 +826,16 @@ div.flex-top{
   display: flex;
   gap: 30px;
 }
+
 .product-detail-desc .description {
-  font-size:14px;
-  word-wrap: break-word; /* Break long words */
-  overflow-wrap: break-word; /* Ensures breaking works in modern browsers */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  white-space: normal; 
+  font-size: 14px;
+  word-wrap: break-word;
+  /* Break long words */
+  overflow-wrap: break-word;
+  /* Ensures breaking works in modern browsers */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+  white-space: normal;
 
 }
 
